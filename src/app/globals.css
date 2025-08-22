@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* 2. Define estilos e variáveis globais na camada base. */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: light;
+    /* As cores do Tailwind serão usadas diretamente, mas mantemos a declaração do tema. */
+  }
+
+  body {
+    @apply antialiased; /* Melhora a renderização da fonte */
+    scroll-behavior: smooth;
+  }
+  
+  /* Imagem de fundo responsiva para a seção Hero */
+  .hero-background-image {
+    background-image: url('/img/background-hero-640.webp');
+  }
+
+  @media (min-width: 768px) {
+    .hero-background-image {
+      background-image: url('/img/background-hero.webp');
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 3. Define classes de componentes customizadas. */
+@layer components {
+  /* Efeito de marca-texto amarelo */
+  .highlight-text {
+    @apply relative inline-block;
+  }
+  .highlight-text::after {
+    content: '';
+    @apply absolute bottom-1 left-0 w-full rounded-sm -z-10;
+    height: 8px;
+    background-color: rgba(245, 158, 11, 0.3); /* Cor amber-500 com opacidade */
+  }
+
+  /* Efeito de brilho que passa sobre um elemento */
+  .shine {
+    @apply relative overflow-hidden;
+  }
+  .shine::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(70deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+    animation: shine 7s linear infinite;
+  }
+
+  /* Estilos para o card de feature com hover */
+  .feature-card {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  .feature-card:hover {
+    @apply shadow-xl -translate-y-1;
+  }
+}
+
+/* 4. Define animações customizadas. */
+@keyframes shine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* O Tailwind já inclui a animação 'bounce' e 'pulse', 
+   então não precisamos redefini-las a menos que queiramos um comportamento diferente.
+   Vamos usar as do Tailwind para manter o padrão. */
+
+/* 5. Acessibilidade: Reduz animações se o usuário preferir. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: scroll !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+.swiper-button-disabled {
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
