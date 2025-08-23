@@ -1,4 +1,9 @@
-// app/layout.tsx (Com a correção dos ícones)
+// app/layout.tsx (Com a configuração final para Font Awesome)
+
+// MUDANÇA 1: Adicionamos a configuração do Font Awesome para Next.js
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false;
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -22,16 +27,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <head>
-        {/* ADICIONADO: Link para carregar a biblioteca de ícones Font Awesome */}
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-          crossOrigin="anonymous"
-          referrerPolicy="no-referrer"
-        />
-      </head>
       <body className={`${inter.variable} bg-slate-50 text-slate-900 font-sans`}>
         {children}
       </body>

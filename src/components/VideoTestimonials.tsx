@@ -1,4 +1,4 @@
-// components/VideoTestimonials.tsx (Versão Definitiva Baseada na Análise)
+// components/VideoTestimonials.tsx (Refatorado com react-fontawesome)
 
 'use client';
 
@@ -6,6 +6,10 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
+
+// MUDANÇA 1: Importamos o componente e os ícones necessários
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlayCircle, faChevronLeft, faChevronRight, faPlay, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -27,7 +31,8 @@ export default function VideoTestimonials() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
-              <i className="fas fa-play-circle text-amber-500 mr-2"></i> Depoimentos em Vídeo
+              {/* MUDANÇA 2: A tag <i> foi substituída */}
+              <FontAwesomeIcon icon={faPlayCircle} className="text-amber-500 mr-2" /> Depoimentos em Vídeo
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
               Veja e ouça diretamente de alunos que transformaram seus estudos com o DAQ Essencial
@@ -35,7 +40,8 @@ export default function VideoTestimonials() {
           </div>
           <div className="relative px-12 md:px-0">
             <button className="video-carousel-prev absolute top-1/2 -translate-y-1/2 left-0 z-20 w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center text-amber-500 hover:bg-amber-50 transition-colors">
-                <i className="fas fa-chevron-left"></i>
+                {/* MUDANÇA 3: A tag <i> foi substituída */}
+                <FontAwesomeIcon icon={faChevronLeft} />
             </button>
             <Swiper
               modules={[Navigation]}
@@ -64,13 +70,12 @@ export default function VideoTestimonials() {
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover z-0"
-                        // MUDANÇA 1: Adicionada a prop 'priority' para otimizar o carregamento da primeira imagem visível
                         priority={index === 0}
                       />
-                      {/* MUDANÇA 2: Overlay agora é transparente por padrão e só aparece no hover */}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 flex items-center justify-center transition-all duration-300 z-10">
                         <div className="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300">
-                          <i className="fas fa-play text-white text-xl"></i>
+                          {/* MUDANÇA 4: A tag <i> foi substituída */}
+                          <FontAwesomeIcon icon={faPlay} className="text-white text-xl" />
                         </div>
                       </div>
                     </div>
@@ -83,13 +88,13 @@ export default function VideoTestimonials() {
               ))}
             </Swiper>
             <button className="video-carousel-next absolute top-1/2 -translate-y-1/2 right-0 z-20 w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center text-amber-500 hover:bg-amber-50 transition-colors">
-                <i className="fas fa-chevron-right"></i>
+                {/* MUDANÇA 5: A tag <i> foi substituída */}
+                <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
         </div>
       </section>
 
-      {/* O Modal de Vídeo (sem alteração) */}
       {activeVideoId && (
         <div 
           onClick={() => setActiveVideoId(null)}
@@ -100,7 +105,8 @@ export default function VideoTestimonials() {
               onClick={(e) => { e.stopPropagation(); setActiveVideoId(null); }}
               className="absolute -top-10 right-0 text-white hover:text-amber-400 text-2xl"
             >
-              <i className="fas fa-times"></i>
+              {/* MUDANÇA 6: A tag <i> foi substituída */}
+              <FontAwesomeIcon icon={faTimes} />
             </button>
             <div className="aspect-video bg-black" onClick={(e) => e.stopPropagation()}>
               <iframe

@@ -1,8 +1,12 @@
-// components/FaqSection.tsx
+// components/FaqSection.tsx (Refatorado com react-fontawesome)
 
-'use client'; // <-- Isso transforma o arquivo em um Componente Cliente
+'use client';
 
 import { useState } from 'react';
+
+// MUDANÇA 1: Importamos o componente e os ícones necessários
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 // Dados do FAQ para facilitar a manutenção
 const faqData = [
@@ -21,12 +25,9 @@ const faqData = [
 ];
 
 export default function FaqSection() {
-  // O 'useState' guarda o estado de qual item do FAQ está aberto.
-  // 'null' significa que todos estão fechados.
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const handleToggle = (index: number) => {
-    // Se o item clicado já estiver aberto, feche-o. Senão, abra-o.
     setOpenIndex(openIndex === index ? null : index);
   };
 
@@ -35,7 +36,8 @@ export default function FaqSection() {
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-slate-900 mb-2">
-            <i className="fas fa-question-circle text-amber-500 mr-2"></i> Perguntas frequentes
+            {/* MUDANÇA 2: A tag <i> foi substituída */}
+            <FontAwesomeIcon icon={faQuestionCircle} className="text-amber-500 mr-2" /> Perguntas frequentes
           </h2>
           <p className="text-slate-600 max-w-2xl mx-auto">Tire suas dúvidas sobre o DAQ Essencial</p>
         </div>
@@ -47,11 +49,13 @@ export default function FaqSection() {
                 className="flex justify-between items-center w-full text-left p-6"
               >
                 <h4 className="font-semibold text-lg text-slate-800">{faq.question}</h4>
-                <i
-                  className={`fas fa-chevron-down text-amber-500 transition-transform duration-300 ${
+                {/* MUDANÇA 3: A tag <i> foi substituída */}
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className={`text-amber-500 transition-transform duration-300 ${
                     openIndex === index ? 'rotate-180' : ''
                   }`}
-                ></i>
+                />
               </button>
               <div
                 className={`transition-all duration-300 ease-in-out ${
