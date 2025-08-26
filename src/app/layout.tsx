@@ -1,6 +1,5 @@
-// app/layout.tsx (Com a configuração final para Font Awesome e Scripts de Rastreamento)
+// app/layout.tsx (Com todos os pixels de rastreamento)
 
-// MUDANÇA 1: Importamos o componente Script do Next.js
 import Script from 'next/script';
 
 import { config } from '@fortawesome/fontawesome-svg-core';
@@ -30,7 +29,6 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.variable} bg-slate-50 text-slate-900 font-sans`}>
-        {/* MUDANÇA 2: Adicionamos a parte <noscript> do Pixel do Meta aqui */}
         <noscript>
             <img height="1" width="1" style={{display: 'none'}}
                  src="https://www.facebook.com/tr?id=575682733921732&ev=PageView&noscript=1" />
@@ -38,8 +36,7 @@ export default function RootLayout({
         
         {children}
 
-        {/* MUDANÇA 3: Adicionamos os scripts do Google e Meta no final do body */}
-        {/* Script do Google Analytics (retirado do seu index.html) */}
+        {/* Script do Google Analytics */}
         <Script
             strategy="afterInteractive"
             src="https://www.googletagmanager.com/gtag/js?id=AW-583505601"
@@ -53,7 +50,7 @@ export default function RootLayout({
             `}
         </Script>
 
-        {/* Script do Meta Pixel (Facebook) - Lembre-se de trocar 'SEU_PIXEL_ID' */}
+        {/* Script do Meta Pixel (Facebook) */}
         <Script id="meta-pixel" strategy="afterInteractive">
             {`
                 !function(f,b,e,v,n,t,s)
@@ -66,6 +63,18 @@ export default function RootLayout({
                 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '575682733921732');
                 fbq('track', 'PageView');
+            `}
+        </Script>
+
+        {/* MUDANÇA: Script do Pixel da Hotmart adicionado aqui */}
+        <Script id="hotmart-pixel" strategy="afterInteractive">
+            {`
+                (function(l,a,u,n,c,h,e,r){l['HotmartLauncherObject']=c;l[c]=l[c]||function(){
+                (l[c].q=l[c].q||[]).push(arguments)},l[c].l=1*new Date();h=a.createElement(u),
+                e=a.getElementsByTagName(u)[0];h.async=1;h.src=n;e.parentNode.insertBefore(h,e)
+                })(window,document,'script','//launcher.hotmart.com/launcher.js','hot');
+
+                hot('account','724d6454-843f-36de-9666-c2bc235cd7be');
             `}
         </Script>
       </body>
