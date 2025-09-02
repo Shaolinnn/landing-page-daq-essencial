@@ -51,7 +51,8 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
     
     // ATENÇÃO: Se você moveu esta URL para uma variável de ambiente, mantenha a versão com process.env
     const webhookUrl = 'https://n8n.srv928140.hstgr.cloud/webhook/13c8579f-e98e-463c-839e-0795865e6dfa';
-    const checkoutUrl = `https://pay.hotmart.com/K70495535U?checkoutMode=1011&name=${encodeURIComponent(nome)}&email=${encodeURIComponent(email)}`;
+    const checkoutUrl = `https://pay.hotmart.com/K70495535U?off=98ezp9bt&checkoutMode=10&bid=1756837455546&name=${encodeURIComponent(nome)}&email=${encodeURIComponent(email)}`;
+
 
     try {
       const response = await fetch(webhookUrl, {
