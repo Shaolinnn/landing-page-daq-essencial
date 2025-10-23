@@ -283,9 +283,17 @@ export default function HomePage() {
               <div className="bg-white p-8 rounded-2xl shadow-lg border-2 border-emerald-200 text-center relative">
                 <span className="absolute -top-3 -right-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">7 dias de garantia</span>
                 <h3 className="text-xl font-bold text-slate-800 mb-4">DAQ Essencial</h3>
-                <p className="text-5xl font-bold text-emerald-600 mb-2 font-poppins">R$ 497</p>
-                <p className="text-slate-500 mb-2">/ano</p>
-                <p className="text-lg text-slate-600 mb-4">ou 12x de R$ 51,40</p>
+                {/* 1. Mensagem de ancoragem */}
+                <p className="text-slate-600 text-base mb-3 px-4">
+                  Tudo isso pelo preço mensal daquele combo de fast-food que você pede sem pensar (e se arrepende 1 hora depois):
+                </p>
+
+                {/* 2. Novo preço (somente parcelado) */}
+                <p className="text-slate-500 text-lg mb-1">Apenas 12x de</p>
+                <p className="text-5xl font-bold text-emerald-600 mb-4 font-poppins">R$ 51,40</p>
+                
+                {/* --- FIM DA MUDANÇA --- */}
+                
                 <ul className="space-y-3 text-left text-slate-700 mb-8">
                     <li className="flex items-start gap-2"><FontAwesomeIcon icon={faCheck} className="text-emerald-500 mt-1" /><span>Método SPQ completo</span></li>
                     <li className="flex items-start gap-2"><FontAwesomeIcon icon={faCheck} className="text-emerald-500 mt-1" /><span>Aulas sobre como usar IA</span></li>
