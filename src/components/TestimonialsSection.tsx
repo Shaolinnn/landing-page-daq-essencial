@@ -18,6 +18,14 @@ const testimonialsData = [
   { image: '/img/depoimento_1.webp', text: 'Não participo dos encontros presenciais devido ao meu trabalho, mas graças as suas dicas consegui passar no CNU. Consegui nota para 12 órgãos estou aguardando a nota da redação.', author: 'Aluno DAQ', role: 'Aprovado CNU', },
   { image: '/img/depoimento_2.webp', text: 'Saiu o gabarito preliminar e acertei 38/40... errei só 2 questões. Estou muito feliz por que nunca imaginei alcançar algo assim. O DAQ mudou minha forma de estudar.', author: 'Aluno DAQ', role: 'Evolução evidente', },
   { image: '/img/Depoimento_3.webp', text: 'Ganhei 1 ano em 1 mês!! Estou amando e indico pra todo mundo! Super feliz com minha evolução depois que comecei a aplicar o método SPQ do DAQ Essencial.', author: 'Fernanda Sodero', role: 'Evolução rápida', },
+
+  { 
+    image: '/img/depoimento_7.webp', 
+    text: 'Em 7 dias aplicando o método, finalizei um caderno com 90% de acertos. Alcancei 73% de aproveitamento em 602 questões. Esse método reacendeu em mim uma vontade insana de estudar.', //
+    author: 'Aluno DAQ', 
+    role: 'Resultados em 7 dias', 
+  },
+
   { image: '/img/depoimento_4.webp', text: 'Sem malabarismo mental, planilhas complexas, cálculos de horas. O DAQ trouxe simplicidade e resultados. É libertador não ter que ficar lendo PDFs gigantes.', author: 'Aluno DAQ', role: 'Método direto ao ponto', },
   { image: '/img/depoimento_5.webp', text: 'Não consegui aplicar 100% do método por começar no pós-edital, mas uns 80% eu apliquei. E deu certo. Deus me deu essa aprovação através do estudo por questões!', author: 'Aluno DAQ', role: 'Aprovado TRE-RJ', },
   { image: '/img/depoimento_6.webp', text: 'Conheci a Kyrlla e comecei a estudar só por questões e os resultados mudaram da água pro vinho. Se eu puder dar um conselho: abandona o excesso de teoria e mergulha nas questões.', author: 'Aluno DAQ', role: 'Virada de chave', },
