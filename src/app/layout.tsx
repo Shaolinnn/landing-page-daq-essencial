@@ -1,73 +1,105 @@
-// app/layout.tsx (Com todos os pixels de rastreamento)
-
-import Script from 'next/script';
-
-import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-config.autoAddCss = false;
-
-import { HotmartPixel } from '../components/HotmartPixel';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
+// app/layout.tsx
+import type { Metadata } from "next";
+import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: 'DAQ Essencial – Aprenda com a prova, na prática',
-  description: 'Descubra o método que transforma cada questão em um mapa direto para sua aprovação com o Método SPQ.',
+  title: "Destruindo as Questões",
+  description:
+    "Método SPQ – Estude por questões com foco no que realmente cai.",
+  icons: { icon: "/favicon.ico" },
 };
+
+const GA4_ID = "G-D0YYSYX9YH";
+const ADS_ID = "AW-583505601";
+
+// Domínios para cross-domain tracking
+const CROSS_DOMAINS = [
+  "destruindoasquestoes.com.br",
+  "bit.ly",
+  "l.wl.co",
+  "hotmart.com",
+];
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.variable} bg-slate-50 text-slate-900 font-sans`}>
-        <noscript>
-            <img height="1" width="1" style={{display: 'none'}}
-                 src="https://www.facebook.com/tr?id=575682733921732&ev=PageView&noscript=1" />
-        </noscript>
-        
-        {children}
-
-        {/* Script do Google Analytics */}
+      <head>
+        {/* Google Ads (gtag base) */}
         <Script
-            strategy="afterInteractive"
-            src="https://www.googletagmanager.com/gtag/js?id=AW-583505601"
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${ADS_ID}`}
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-            {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'AW-583505601', { transport_type: 'beacon' });
-            `}
+        <Script id="google-ads" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${ADS_ID}', { transport_type: 'beacon' });
+          `}
         </Script>
 
-        {/* Script do Meta Pixel (Facebook) */}
-        <Script id="meta-pixel" strategy="afterInteractive">
-            {`
-                !function(f,b,e,v,n,t,s)
-                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t,s)}(window, document,'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', '575682733921732');
-                fbq('track', 'PageView');
-            `}
+        {/* Google Analytics 4 */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+        />
+        <Script id="ga4-config" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            // GA4 com cross-domain (autoLink)
+            gtag('config', '${GA4_ID}', {
+              send_page_view: true,
+              transport_type: 'beacon',
+              linker: {
+                domains: ${JSON.stringify(CROSS_DOMAINS)}
+              }
+            });
+          `}
         </Script>
 
-        <HotmartPixel />
+        {/* Persistência de UTM + evento auxiliar */}
+        <Script id="persist-utm" strategy="afterInteractive">
+          {`
+            (function() {
+              try {
+                var url = new URL(window.location.href);
+                var params = url.searchParams;
+
+                var hasUtm = false;
+                var keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+                keys.forEach(function(k){
+                  if (params.has(k)) {
+                    hasUtm = true;
+                    localStorage.setItem(k, params.get(k) || '');
+                  }
+                });
+
+                // Sempre que houver UTM, dispara um evento auxiliar para debug
+                if (hasUtm && typeof gtag === 'function') {
+                  gtag('event', 'utm_persist', {
+                    utm_source: localStorage.getItem('utm_source') || '(not set)',
+                    utm_medium: localStorage.getItem('utm_medium') || '(not set)',
+                    utm_campaign: localStorage.getItem('utm_campaign') || '(not set)',
+                    utm_term: localStorage.getItem('utm_term') || '',
+                    utm_content: localStorage.getItem('utm_content') || ''
+                  });
+                }
+              } catch (e) {
+                // falha silenciosa para não quebrar a página
+              }
+            })();
+          `}
+        </Script>
+      </head>
+      <body className="min-h-dvh antialiased">
+        {children}
       </body>
     </html>
   );
