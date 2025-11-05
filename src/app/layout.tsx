@@ -1,23 +1,23 @@
 // app/layout.tsx
+import "./globals.css"; // 🟠 Garante que os estilos Tailwind/global sejam carregados
 import type { Metadata } from "next";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Destruindo as Questões",
+  title: "Destruindo as Questões | Método SPQ",
   description:
-    "Método SPQ – Estude por questões com foco no que realmente cai.",
+    "Aprenda com o método SPQ — estude por questões com foco no que realmente cai e transforme cada questão em uma aula.",
   icons: { icon: "/favicon.ico" },
 };
 
 const GA4_ID = "G-D0YYSYX9YH";
 const ADS_ID = "AW-583505601";
-
-// Domínios para cross-domain tracking
 const CROSS_DOMAINS = [
   "destruindoasquestoes.com.br",
   "bit.ly",
   "l.wl.co",
   "hotmart.com",
+  "hotmart.app",
 ];
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        {/* Google Ads (gtag base) */}
+        {/* Google Ads */}
         <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${ADS_ID}`}
@@ -52,8 +52,6 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
-            // GA4 com cross-domain (autoLink)
             gtag('config', '${GA4_ID}', {
               send_page_view: true,
               transport_type: 'beacon',
@@ -64,24 +62,21 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Persistência de UTM + evento auxiliar */}
+        {/* Persistência de UTMs */}
         <Script id="persist-utm" strategy="afterInteractive">
           {`
             (function() {
               try {
-                var url = new URL(window.location.href);
-                var params = url.searchParams;
-
-                var hasUtm = false;
-                var keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
-                keys.forEach(function(k){
+                const url = new URL(window.location.href);
+                const params = url.searchParams;
+                const keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+                let hasUtm = false;
+                keys.forEach(k => {
                   if (params.has(k)) {
                     hasUtm = true;
                     localStorage.setItem(k, params.get(k) || '');
                   }
                 });
-
-                // Sempre que houver UTM, dispara um evento auxiliar para debug
                 if (hasUtm && typeof gtag === 'function') {
                   gtag('event', 'utm_persist', {
                     utm_source: localStorage.getItem('utm_source') || '(not set)',
@@ -91,14 +86,13 @@ export default function RootLayout({
                     utm_content: localStorage.getItem('utm_content') || ''
                   });
                 }
-              } catch (e) {
-                // falha silenciosa para não quebrar a página
-              }
+              } catch (e) {}
             })();
           `}
         </Script>
       </head>
-      <body className="min-h-dvh antialiased">
+
+      <body className="min-h-screen bg-white text-gray-900 antialiased">
         {children}
       </body>
     </html>
