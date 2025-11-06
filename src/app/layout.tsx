@@ -72,7 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', '${GA_MEASUREMENT_ID}', {
               send_page_view: false,
               linker: { domains: ${JSON.stringify(CROSS_DOMAIN_LINKER)} },
-              debug_mode: true // <<< DEBUG GLOBAL
+              debug_mode: true // <<< DEBUG GLOBAL ATIVO
             });
           `}
         </Script>
@@ -115,7 +115,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   content: localStorage.getItem('utm_content') || ''
                 };
 
-                // Dispara page_view MANUAL com as UTMs (primeiro carregamento)
+                // Dispara page_view MANUAL com as UTMs (primeiro carregamento) EM DEBUG
                 if (typeof gtag === 'function') {
                   gtag('event', 'page_view', {
                     page_location: window.location.href,
@@ -125,7 +125,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     utm_medium: saved.medium || undefined,
                     utm_campaign: saved.campaign || undefined,
                     utm_term: saved.term || undefined,
-                    utm_content: saved.content || undefined
+                    utm_content: saved.content || undefined,
+                    debug_mode: true // <<< DEBUG NO EVENTO
                   });
                 }
               } catch (e) {
@@ -164,7 +165,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       utm_medium: saved.medium || undefined,
                       utm_campaign: saved.campaign || undefined,
                       utm_term: saved.term || undefined,
-                      utm_content: saved.content || undefined
+                      utm_content: saved.content || undefined,
+                      debug_mode: true // <<< DEBUG NO PAGE_VIEW DE ROTA
                     });
                   }
                 } catch (e) {}
