@@ -91,8 +91,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   content: params.get('utm_content')
                 };
 
-                // Se chegou com UTM, persistimos
-                if (utm.source || utm.medium || utm.campaign || utm.term || utm.content) {
+                // Se chegou com UTM na URL, salva
+                if (
+                  utm.source ||
+                  utm.medium ||
+                  utm.campaign ||
+                  utm.term ||
+                  utm.content
+                ) {
                   localStorage.setItem('utm_source', utm.source || '');
                   localStorage.setItem('utm_medium', utm.medium || '');
                   localStorage.setItem('utm_campaign', utm.campaign || '');
@@ -100,7 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   localStorage.setItem('utm_content', utm.content || '');
                 }
 
-                // Recupera valores (útil em navegações internas)
+                // Recupera valores (para usar no page_view)
                 var saved = {
                   source: localStorage.getItem('utm_source') || '',
                   medium: localStorage.getItem('utm_medium') || '',
@@ -109,7 +115,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   content: localStorage.getItem('utm_content') || ''
                 };
 
-                // Dispara page_view manual inicial com UTM (se houver) EM DEBUG
+                // Dispara page_view MANUAL com as UTMs (primeiro carregamento)
                 if (typeof gtag === 'function') {
                   gtag('event', 'page_view', {
                     page_location: window.location.href,
@@ -119,12 +125,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     utm_medium: saved.medium || undefined,
                     utm_campaign: saved.campaign || undefined,
                     utm_term: saved.term || undefined,
-                    utm_content: saved.content || undefined,
-                    debug_mode: true // <<< DEBUG NO EVENTO
+                    utm_content: saved.content || undefined
                   });
                 }
               } catch (e) {
-                console && console.warn && console.warn('GA4 UTM persist error:', e);
+                if (console && console.warn) {
+                  console.warn('GA4 UTM persist error:', e);
+                }
               }
             })();
           `}
@@ -134,16 +141,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Script id="ga4-spa-tracking" strategy="afterInteractive">
           {`
             (function() {
-              // Helper para enviar page_view a cada mudança de URL
+              function getSavedUtm() {
+                return {
+                  source: localStorage.getItem('utm_source') || '',
+                  medium: localStorage.getItem('utm_medium') || '',
+                  campaign: localStorage.getItem('utm_campaign') || '',
+                  term: localStorage.getItem('utm_term') || '',
+                  content: localStorage.getItem('utm_content') || ''
+                };
+              }
+
               function sendPageView() {
                 try {
-                  var saved = {
-                    source: localStorage.getItem('utm_source') || '',
-                    medium: localStorage.getItem('utm_medium') || '',
-                    campaign: localStorage.getItem('utm_campaign') || '',
-                    term: localStorage.getItem('utm_term') || '',
-                    content: localStorage.getItem('utm_content') || ''
-                  };
+                  var saved = getSavedUtm();
 
                   if (typeof gtag === 'function') {
                     gtag('event', 'page_view', {
@@ -154,33 +164,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       utm_medium: saved.medium || undefined,
                       utm_campaign: saved.campaign || undefined,
                       utm_term: saved.term || undefined,
-                      utm_content: saved.content || undefined,
-                      debug_mode: true // <<< DEBUG NO EVENTO DE ROTA
+                      utm_content: saved.content || undefined
                     });
                   }
                 } catch (e) {}
               }
 
-              // Dispara em back/forward
+              // Dispara em navegações de histórico (voltar/avançar)
               window.addEventListener('popstate', sendPageView);
 
-              // Monkeypatch em pushState/replaceState para capturar navegações internas
-              ['pushState','replaceState'].forEach(function(type) {
+              // “Monkeypatch” em pushState/replaceState para pegar navegações internas
+              ['pushState', 'replaceState'].forEach(function(type) {
                 var orig = history[type];
                 history[type] = function() {
                   var rv = orig.apply(this, arguments);
-                  try { sendPageView(); } catch(e) {}
+                  try { sendPageView(); } catch (e) {}
                   return rv;
                 };
               });
 
-              // Alguns frameworks alteram o title depois — observe e envia novamente
+              // Caso o título mude depois de carregar, dispara de novo (opcional)
+              var titleEl = document.querySelector('title') || document.documentElement;
               var titleObserver = new MutationObserver(function() {
-                // pequeno debounce
                 clearTimeout(window.__ga4TitleDebounce);
                 window.__ga4TitleDebounce = setTimeout(sendPageView, 150);
               });
-              titleObserver.observe(document.querySelector('title') || document.documentElement, { childList: true, subtree: true });
+              titleObserver.observe(titleEl, { childList: true, subtree: true });
             })();
           `}
         </Script>
