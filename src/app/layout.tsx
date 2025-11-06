@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           strategy="afterInteractive"
         />
 
-        {/* 2) Inicializa GA4 com linker e sem enviar page_view automático */}
+        {/* 2) Inicializa GA4 com linker, sem page_view automático E com debug para todos */}
         <Script id="ga4-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -71,12 +71,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
             gtag('config', '${GA_MEASUREMENT_ID}', {
               send_page_view: false,
-              linker: { domains: ${JSON.stringify(CROSS_DOMAIN_LINKER)} }
+              linker: { domains: ${JSON.stringify(CROSS_DOMAIN_LINKER)} },
+              debug_mode: true // <<< DEBUG GLOBAL
             });
           `}
         </Script>
 
-        {/* 3) Persistência de UTM + page_view inicial com UTMs */}
+        {/* 3) Persistência de UTM + page_view inicial com UTMs (em modo debug) */}
         <Script id="ga4-utm-persist" strategy="afterInteractive">
           {`
             (function() {
@@ -108,7 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   content: localStorage.getItem('utm_content') || ''
                 };
 
-                // Dispara page_view manual inicial com UTM (se houver)
+                // Dispara page_view manual inicial com UTM (se houver) EM DEBUG
                 if (typeof gtag === 'function') {
                   gtag('event', 'page_view', {
                     page_location: window.location.href,
@@ -118,7 +119,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     utm_medium: saved.medium || undefined,
                     utm_campaign: saved.campaign || undefined,
                     utm_term: saved.term || undefined,
-                    utm_content: saved.content || undefined
+                    utm_content: saved.content || undefined,
+                    debug_mode: true // <<< DEBUG NO EVENTO
                   });
                 }
               } catch (e) {
@@ -128,7 +130,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
 
-        {/* 4) Page view em mudanças de rota (SPA / App Router) */}
+        {/* 4) Page view em mudanças de rota (SPA / App Router), também em debug */}
         <Script id="ga4-spa-tracking" strategy="afterInteractive">
           {`
             (function() {
@@ -152,7 +154,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       utm_medium: saved.medium || undefined,
                       utm_campaign: saved.campaign || undefined,
                       utm_term: saved.term || undefined,
-                      utm_content: saved.content || undefined
+                      utm_content: saved.content || undefined,
+                      debug_mode: true // <<< DEBUG NO EVENTO DE ROTA
                     });
                   }
                 } catch (e) {}
