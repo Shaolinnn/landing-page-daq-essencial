@@ -36,6 +36,7 @@ const GA_MEASUREMENT_ID = "G-D0YYSYX9YH";
 // Domínios para cross-domain (linker)
 const CROSS_DOMAIN_LINKER = [
   "destruindoasquestoes.com.br",
+  "www.destruindoasquestoes.com.br",
   "bit.ly",
   "l.wl.co",
   "hotmart.com",
