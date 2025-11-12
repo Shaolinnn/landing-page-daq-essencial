@@ -20,7 +20,7 @@ const testimonialsData = [
   { image: '/img/Depoimento_3.webp', text: 'Ganhei 1 ano em 1 mês!! Estou amando e indico pra todo mundo! Super feliz com minha evolução depois que comecei a aplicar o método SPQ do DAQ Essencial.', author: 'Fernanda Sodero', role: 'Evolução rápida', },
 
   { 
-    image: '/img/depoimento_7.webp', 
+    image: '/img/depoimento_8.webp', 
     text: 'Em 7 dias aplicando o método, finalizei um caderno com 90% de acertos. Alcancei 73% de aproveitamento em 602 questões. Esse método reacendeu em mim uma vontade insana de estudar.', //
     author: 'Aluno DAQ', 
     role: 'Resultados em 7 dias', 

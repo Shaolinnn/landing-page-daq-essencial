@@ -285,7 +285,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-slate-800 mb-4">DAQ Essencial</h3>
                 {/* 1. Mensagem de ancoragem */}
                 <p className="text-slate-600 text-base mb-3 px-4">
-                  Tudo isso pelo preço mensal daquele combo de fast-food que você pede sem pensar (e se arrepende 1 hora depois):
+                  Mais barato que aquela assinatura vitalícia do cursinho que você não usa — e, diferente dela, te aproxima da aprovação:
                 </p>
 
                 {/* 2. Novo preço (somente parcelado) */}
