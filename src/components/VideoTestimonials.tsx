@@ -91,7 +91,7 @@ const videoData: VideoTestimonial[] = [
   },
   {
     videoId: '_r289yBCU34',
-    thumbnail: '/img/thumb_lucas_gcm.jpg', // ajusta pro caminho real da thumb do Lucas
+    thumbnail: '/img/video-lucas.jpg',
     title: 'Lucas — Guarda Civil Municipal de Poços de Caldas',
     subtitle: '28 anos — Sudoeste de Minas (MG)',
     hook: 'Conciliou trabalho, faculdade, estágio e treinos de maratona até a aprovação na GCM.',

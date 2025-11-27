@@ -18,87 +18,100 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 type Testimonial = {
-  id: string;
   image: string;
-  name: string;
+  text: string;
+  author: string;
   role: string;
-  quote: string;
 };
 
-const testimonials: Testimonial[] = [
+const testimonialsData: Testimonial[] = [
   {
-    id: 'simone',
-    image: '/img/depoimento_simone.webp', // ajuste pro caminho real
-    name: 'Simone',
-    role: 'Área fiscal — pré-edital',
-    quote:
-      '“Eu tinha 3–4h por dia e vivia perdida em PDF. Com o DAQ Essencial, consegui organizar meus estudos em cadernos e, pela primeira vez, senti que estava avançando de verdade.”',
+    image: '/img/depoimento_1.webp',
+    text: 'Não participo dos encontros presenciais e, ainda assim, consegui nota para 12 órgãos. Estou aguardando a nota da redação.',
+    author: 'Aluno DAQ',
+    role: 'Aprovado CNU',
   },
   {
-    id: 'gabriel',
-    image: '/img/depoimento_gabriel.webp',
-    name: 'Gabriel',
-    role: 'Aprovado em concurso policial',
-    quote:
-      '“Depois de anos batendo na trave, estudar por questões com lógica de banca foi o divisor de águas. A porcentagem no TEC começou a subir e a aprovação veio.”',
+    image: '/img/depoimento_2.webp',
+    text: 'Saiu o gabarito preliminar e acertei 38 de 40 questões — errei só 2. Nunca imaginei alcançar algo assim. O DAQ mudou minha forma de estudar.',
+    author: 'Aluno DAQ',
+    role: 'Evolução evidente',
   },
   {
-    id: 'victor',
-    image: '/img/depoimento_victor.webp',
-    name: 'Victor',
-    role: 'Aprovado Senado Federal',
-    quote:
-      '“Eu estudava há 7 anos do jeito tradicional. Quando mudei a estratégia com o SPQ, parei de acumular teoria e comecei a acumular acertos.”',
+    image: '/img/Depoimento_3.webp',
+    text: 'Ganhei 1 ano em 1 mês! Estou amando o método e indico demais o DAQ Essencial.',
+    author: 'Fernanda Sodero',
+    role: 'Evolução rápida',
   },
   {
-    id: 'lucas',
-    image: '/img/depoimento_lucas.webp', // mesma imagem que você usa na thumb do Lucas
-    name: 'Lucas',
+    image: '/img/depoimento_8.webp',
+    text: 'Em 7 dias aplicando o método, finalizei um caderno com 90% de acertos e cheguei a 73% de aproveitamento em 602 questões. Esse método reacendeu em mim uma vontade insana de estudar.',
+    author: 'Aluno DAQ',
+    role: 'Resultados em 7 dias',
+  },
+  {
+    image: '/img/depoimento_4.webp',
+    text: 'Sem malabarismo mental, planilhas complexas ou cálculos de horas. O DAQ trouxe simplicidade e resultado como eu nunca tinha visto antes.',
+    author: 'Aluno DAQ',
+    role: 'Método direto ao ponto',
+  },
+  {
+    image: '/img/depoimento_5.webp',
+    text: 'Não consegui aplicar o método 100% na rotina, mas uns 80% eu apliquei. E deu certo. Deus me deu essa aprovação através do estudo por questões!',
+    author: 'Aluno DAQ',
+    role: 'Aprovado TRE-RJ',
+  },
+  {
+    image: '/img/depoimento_6.webp',
+    text: 'Conheci a Kyrlla e comecei a estudar só por questões. Pela primeira vez, vi minha evolução acontecer nas questões.',
+    author: 'Aluno DAQ',
+    role: 'Virada de chave',
+  },
+  // NOVO DEPOIMENTO – Lucas
+  {
+    image: '/img/depoimento_lucas.webp', // ajuste o caminho se sua imagem tiver outro nome
+    text: '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
+    author: 'Lucas',
     role: 'Aprovado GCM Poços de Caldas/MG',
-    quote:
-      '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
   },
 ];
 
 export default function TestimonialsSection() {
   return (
     <section className="py-16 bg-slate-50">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Título / subtítulo */}
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-slate-900 mb-3">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Cabeçalho da seção */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+            <FontAwesomeIcon
+              icon={faQuoteLeft}
+              className="text-amber-500 mr-2"
+            />
             Histórias reais de quem aplicou o Método SPQ
           </h2>
-          <p className="text-slate-600 max-w-2xl mx-auto">
-            Concurseiros comuns que saíram do caos de PDFs, organizaram os estudos e voltaram
-            a acreditar na aprovação estudando por questões.
+          <p className="text-slate-600 max-w-2xl mx-auto text-base md:text-lg">
+            Concurseiros comuns que saíram do caos de PDFs, organizaram os
+            estudos e voltaram a acreditar na aprovação estudando por questões.
           </p>
         </div>
 
         <div className="relative">
           {/* Botão anterior */}
           <button
-            className="depoimento-prev absolute -left-6 top-1/2 z-10 hidden md:flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-amber-200 bg-white text-amber-500 hover:bg-amber-50 transition-colors shadow-sm"
+            className="depoimento-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-amber-200 bg-white text-amber-500 hover:bg-amber-50 transition-colors shadow-sm"
             aria-label="Depoimento anterior"
           >
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
 
-          {/* Botão próximo */}
-          <button
-            className="depoimento-next absolute -right-6 top-1/2 z-10 hidden md:flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-amber-200 bg-white text-amber-500 hover:bg-amber-50 transition-colors shadow-sm"
-            aria-label="Próximo depoimento"
-          >
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
-
+          {/* Carrossel */}
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={24}
+            spaceBetween={30}
             slidesPerView={1}
             loop
             autoplay={{
-              delay: 6000,
+              delay: 5000,
               disableOnInteraction: false,
             }}
             pagination={{ clickable: true }}
@@ -110,40 +123,57 @@ export default function TestimonialsSection() {
               768: { slidesPerView: 2 },
               1024: { slidesPerView: 3 },
             }}
+            className="!pb-12"
           >
-            {testimonials.map((t) => (
-              <SwiperSlide key={t.id}>
-                <article className="h-full rounded-2xl bg-white shadow-md border border-slate-100 overflow-hidden flex flex-col">
-                  {/* IMAGEM GRANDE EM CIMA */}
-                  <div className="relative w-full aspect-square bg-slate-100">
+            {testimonialsData.map((testimonial, index) => (
+              <SwiperSlide key={index}>
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl">
+                  {/* Imagem grande em cima */}
+                  <div className="relative h-52 w-full md:h-56">
                     <Image
-                      src={t.image}
-                      alt={t.name}
+                      src={testimonial.image}
+                      alt={`Depoimento de ${testimonial.author}`}
                       fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 320px"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover"
+                      priority={index < 3}
                     />
                   </div>
 
-                  {/* TEXTO / RESUMO */}
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="mb-3">
-                      <p className="text-sm font-semibold text-slate-900">{t.name}</p>
-                      <p className="text-xs text-slate-500">{t.role}</p>
-                    </div>
-
-                    <div className="relative flex-1">
+                  {/* Texto do depoimento */}
+                  <div className="flex flex-1 flex-col p-6">
+                    <div className="flex items-start gap-3 mb-4">
                       <FontAwesomeIcon
                         icon={faQuoteLeft}
-                        className="text-amber-200 text-3xl mb-2"
+                        className="text-amber-400 text-2xl mt-1"
                       />
-                      <p className="text-sm text-slate-700 leading-relaxed">{t.quote}</p>
+                      <p className="text-slate-700 text-sm md:text-base leading-relaxed">
+                        {testimonial.text}
+                      </p>
+                    </div>
+
+                    {/* Autor */}
+                    <div className="mt-auto border-t border-slate-100 pt-4">
+                      <h4 className="font-semibold text-slate-800">
+                        {testimonial.author}
+                      </h4>
+                      <p className="text-sm text-slate-500">
+                        {testimonial.role}
+                      </p>
                     </div>
                   </div>
-                </article>
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>
+
+          {/* Botão próximo */}
+          <button
+            className="depoimento-next absolute right-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-amber-200 bg-white text-amber-500 hover:bg-amber-50 transition-colors shadow-sm"
+            aria-label="Próximo depoimento"
+          >
+            <FontAwesomeIcon icon={faChevronRight} />
+          </button>
         </div>
       </div>
     </section>
