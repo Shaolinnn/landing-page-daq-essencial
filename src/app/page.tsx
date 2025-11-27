@@ -145,8 +145,6 @@ export default function HomePage() {
         </div>
       </header>
 
-
-
       {/* Seção Faixa de Destaque */}
       <section className="bg-amber-50 py-4 text-center text-sm font-medium text-amber-800 tracking-wide shine">
         <div className="max-w-4xl mx-auto px-6">

@@ -7,7 +7,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuoteLeft, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faQuoteLeft,
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -24,7 +28,7 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     id: 'simone',
-    image: '/img/depoimento_1.webp',
+    image: '/img/depoimento_simone.webp', // ajuste pro caminho real
     name: 'Simone',
     role: 'Área fiscal — pré-edital',
     quote:
@@ -32,7 +36,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 'gabriel',
-    image: '/img/depoimento_2.webp',
+    image: '/img/depoimento_gabriel.webp',
     name: 'Gabriel',
     role: 'Aprovado em concurso policial',
     quote:
@@ -40,7 +44,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 'victor',
-    image: '/img/depoimento_3.webp',
+    image: '/img/depoimento_victor.webp',
     name: 'Victor',
     role: 'Aprovado Senado Federal',
     quote:
@@ -48,7 +52,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 'lucas',
-    image: '/img/video-lucas.webp', // mesma imagem da thumb do vídeo
+    image: '/img/depoimento_lucas.webp', // mesma imagem que você usa na thumb do Lucas
     name: 'Lucas',
     role: 'Aprovado GCM Poços de Caldas/MG',
     quote:
@@ -94,7 +98,7 @@ export default function TestimonialsSection() {
             slidesPerView={1}
             loop
             autoplay={{
-              delay: 5000,
+              delay: 6000,
               disableOnInteraction: false,
             }}
             pagination={{ clickable: true }}
@@ -109,29 +113,32 @@ export default function TestimonialsSection() {
           >
             {testimonials.map((t) => (
               <SwiperSlide key={t.id}>
-                <article className="h-full rounded-2xl bg-white shadow-md border border-slate-100 px-8 py-7 flex flex-col">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="relative h-12 w-12 rounded-full overflow-hidden bg-slate-100 border border-slate-200">
-                      <Image
-                        src={t.image}
-                        alt={t.name}
-                        fill
-                        sizes="48px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-slate-900">{t.name}</p>
-                      <p className="text-xs text-slate-500">{t.role}</p>
-                    </div>
+                <article className="h-full rounded-2xl bg-white shadow-md border border-slate-100 overflow-hidden flex flex-col">
+                  {/* IMAGEM GRANDE EM CIMA */}
+                  <div className="relative w-full aspect-square bg-slate-100">
+                    <Image
+                      src={t.image}
+                      alt={t.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 320px"
+                      className="object-cover"
+                    />
                   </div>
 
-                  <div className="relative flex-1">
-                    <FontAwesomeIcon
-                      icon={faQuoteLeft}
-                      className="text-amber-200 text-3xl mb-3"
-                    />
-                    <p className="text-sm text-slate-700 leading-relaxed">{t.quote}</p>
+                  {/* TEXTO / RESUMO */}
+                  <div className="p-6 flex-1 flex flex-col">
+                    <div className="mb-3">
+                      <p className="text-sm font-semibold text-slate-900">{t.name}</p>
+                      <p className="text-xs text-slate-500">{t.role}</p>
+                    </div>
+
+                    <div className="relative flex-1">
+                      <FontAwesomeIcon
+                        icon={faQuoteLeft}
+                        className="text-amber-200 text-3xl mb-2"
+                      />
+                      <p className="text-sm text-slate-700 leading-relaxed">{t.quote}</p>
+                    </div>
                   </div>
                 </article>
               </SwiperSlide>
