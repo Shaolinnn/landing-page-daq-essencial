@@ -69,7 +69,7 @@ const testimonialsData: Testimonial[] = [
   },
   // NOVO DEPOIMENTO – Lucas
   {
-    image: '/img/depoimento_lucas.webp', // ajuste o caminho se sua imagem tiver outro nome
+    image: '/img/video-lucas.webp', 
     text: '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
     author: 'Lucas',
     role: 'Aprovado GCM Poços de Caldas/MG',
