@@ -48,6 +48,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
 
+        {/* Contentsquare – mapa de calor / UX */}
+        <Script
+          id="contentsquare-script"
+          src="https://t.contentsquare.net/uxa/8b9c231da4716.js"
+          strategy="afterInteractive"
+        />
+
         {/* 1) Carrega a biblioteca do GA4 */}
         <Script
           id="ga4-src"
@@ -64,17 +71,78 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
             // Consent Mode v2 básico (opcional — ajusta se usar CMP)
             gtag('consent', 'default', {
-              'ad_storage': 'denied',
-              'ad_user_data': 'denied',
-              'ad_personalization': 'denied',
-              'analytics_storage': 'granted'
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              analytics_storage: 'granted'
             });
 
+            // Config GA4 sem page_view automático
             gtag('config', '${GA_MEASUREMENT_ID}', {
               send_page_view: false,
-              linker: { domains: ${JSON.stringify(CROSS_DOMAIN_LINKER)} },
-              debug_mode: true // <<< DEBUG GLOBAL ATIVO
+              transport_type: 'beacon',
+              anonymize_ip: true,
+              allow_ad_personalization_signals: false,
+              allow_google_signals: false,
+              debug_mode: true, // Força "DebugView" no GA4
+              linker: {
+                domains: ${JSON.stringify(CROSS_DOMAIN_LINKER)},
+                decoration: 'linker',
+              }
             });
+
+            // Cross-domain: auto-link de todos os <a> para domínios configurados
+            (function() {
+              function decorateUrl(url) {
+                try {
+                  var u = new URL(url, window.location.origin);
+
+                  // Só decora se for domínio permitido
+                  var host = (u.hostname || '').replace(/^www\\./i, '');
+                  var isAllowed = ${JSON.stringify(CROSS_DOMAIN_LINKER)}.some(function(domain) {
+                    var d = domain.replace(/^www\\./i, '');
+                    return host === d || host.endsWith('.' + d);
+                  });
+                  if (!isAllowed) return url;
+
+                  // Cria um clientId fake (ou poderia chamar gtag('get', ...))
+                  var cid = 'cid-' + Math.random().toString(16).slice(2);
+                  u.searchParams.set('_gl', 'cid=' + encodeURIComponent(cid));
+
+                  return u.toString();
+                } catch (e) {
+                  return url;
+                }
+              }
+
+              function patchLinks() {
+                var anchors = document.querySelectorAll('a[href]');
+                anchors.forEach(function(a) {
+                  var href = a.getAttribute('href') || '';
+                  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+                    return;
+                  }
+                  try {
+                    var decorated = decorateUrl(href);
+                    if (decorated && decorated !== href) {
+                      a.setAttribute('href', decorated);
+                    }
+                  } catch (e) {}
+                });
+              }
+
+              // Roda no load
+              window.addEventListener('load', patchLinks);
+
+              // Observa mudanças no DOM (para SPAs / Next.js)
+              var observer = new MutationObserver(function(mutations) {
+                patchLinks();
+              });
+              observer.observe(document.documentElement, {
+                childList: true,
+                subtree: true
+              });
+            })();
           `}
         </Script>
 
@@ -100,99 +168,62 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   utm.term ||
                   utm.content
                 ) {
-                  localStorage.setItem('utm_source', utm.source || '');
-                  localStorage.setItem('utm_medium', utm.medium || '');
-                  localStorage.setItem('utm_campaign', utm.campaign || '');
-                  localStorage.setItem('utm_term', utm.term || '');
-                  localStorage.setItem('utm_content', utm.content || '');
+                  localStorage.setItem('daq_first_utm', JSON.stringify({
+                    ...utm,
+                    ts: Date.now()
+                  }));
                 }
 
-                // Recupera valores (para usar no page_view)
-                var saved = {
-                  source: localStorage.getItem('utm_source') || '',
-                  medium: localStorage.getItem('utm_medium') || '',
-                  campaign: localStorage.getItem('utm_campaign') || '',
-                  term: localStorage.getItem('utm_term') || '',
-                  content: localStorage.getItem('utm_content') || ''
-                };
+                // Resgata UTM salvo (se existir)
+                var stored = localStorage.getItem('daq_first_utm');
+                var firstUtm = stored ? JSON.parse(stored) : null;
 
-                // Dispara page_view MANUAL com as UTMs (primeiro carregamento) EM DEBUG
-                if (typeof gtag === 'function') {
-                  gtag('event', 'page_view', {
-                    page_location: window.location.href,
-                    page_path: window.location.pathname + window.location.search,
-                    page_title: document.title,
-                    utm_source: saved.source || undefined,
-                    utm_medium: saved.medium || undefined,
-                    utm_campaign: saved.campaign || undefined,
-                    utm_term: saved.term || undefined,
-                    utm_content: saved.content || undefined,
-                    debug_mode: true // <<< DEBUG NO EVENTO
-                  });
-                }
-              } catch (e) {
-                if (console && console.warn) {
-                  console.warn('GA4 UTM persist error:', e);
-                }
-              }
-            })();
-          `}
-        </Script>
+                // Dispara page_view manual com debug_mode
+                function sendPageView() {
+                  var page_location = window.location.href;
+                  var page_path = window.location.pathname + window.location.search;
+                  var page_title = document.title || 'DAQ Essencial';
 
-        {/* 4) Page view em mudanças de rota (SPA / App Router), também em debug */}
-        <Script id="ga4-spa-tracking" strategy="afterInteractive">
-          {`
-            (function() {
-              function getSavedUtm() {
-                return {
-                  source: localStorage.getItem('utm_source') || '',
-                  medium: localStorage.getItem('utm_medium') || '',
-                  campaign: localStorage.getItem('utm_campaign') || '',
-                  term: localStorage.getItem('utm_term') || '',
-                  content: localStorage.getItem('utm_content') || ''
-                };
-              }
+                  var eventParams = {
+                    page_location: page_location,
+                    page_path: page_path,
+                    page_title: page_title,
+                    debug_mode: true
+                  };
 
-              function sendPageView() {
-                try {
-                  var saved = getSavedUtm();
-
-                  if (typeof gtag === 'function') {
-                    gtag('event', 'page_view', {
-                      page_location: window.location.href,
-                      page_path: window.location.pathname + window.location.search,
-                      page_title: document.title,
-                      utm_source: saved.source || undefined,
-                      utm_medium: saved.medium || undefined,
-                      utm_campaign: saved.campaign || undefined,
-                      utm_term: saved.term || undefined,
-                      utm_content: saved.content || undefined,
-                      debug_mode: true // <<< DEBUG NO PAGE_VIEW DE ROTA
-                    });
+                  // Se tiver UTM persistida, manda junto
+                  if (firstUtm) {
+                    eventParams.utm_source = firstUtm.source || '(not set)';
+                    eventParams.utm_medium = firstUtm.medium || '(not set)';
+                    eventParams.utm_campaign = firstUtm.campaign || '(not set)';
+                    if (firstUtm.term) eventParams.utm_term = firstUtm.term;
+                    if (firstUtm.content) eventParams.utm_content = firstUtm.content;
                   }
-                } catch (e) {}
-              }
 
-              // Dispara em navegações de histórico (voltar/avançar)
-              window.addEventListener('popstate', sendPageView);
+                  // Se tiver gtag carregado, envia
+                  if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'page_view', eventParams);
+                  }
+                }
 
-              // “Monkeypatch” em pushState/replaceState para pegar navegações internas
-              ['pushState', 'replaceState'].forEach(function(type) {
-                var orig = history[type];
-                history[type] = function() {
-                  var rv = orig.apply(this, arguments);
-                  try { sendPageView(); } catch (e) {}
-                  return rv;
-                };
-              });
+                // Debounce simples pra evitar flood em navegações rápidas
+                window.__ga4TitleDebounce = window.__ga4TitleDebounce || null;
 
-              // Caso o título mude depois de carregar, dispara de novo (opcional)
-              var titleEl = document.querySelector('title') || document.documentElement;
-              var titleObserver = new MutationObserver(function() {
-                clearTimeout(window.__ga4TitleDebounce);
-                window.__ga4TitleDebounce = setTimeout(sendPageView, 150);
-              });
-              titleObserver.observe(titleEl, { childList: true, subtree: true });
+                if (typeof window !== 'undefined') {
+                  if (window.__ga4InitialPVFired !== true) {
+                    window.__ga4InitialPVFired = true;
+                    sendPageView();
+                  }
+
+                  // Caso o título mude depois de carregar, dispara de novo (opcional)
+                  var titleEl = document.querySelector('title') || document.documentElement;
+                  var titleObserver = new MutationObserver(function() {
+                    clearTimeout(window.__ga4TitleDebounce);
+                    window.__ga4TitleDebounce = setTimeout(sendPageView, 150);
+                  });
+                  titleObserver.observe(titleEl, { childList: true, subtree: true });
+                }
+              } catch (e) {}
             })();
           `}
         </Script>
