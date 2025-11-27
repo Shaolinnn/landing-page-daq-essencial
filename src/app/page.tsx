@@ -50,46 +50,104 @@ export default function HomePage() {
   return (
     <main>
       {/* Seção Header */}
-      <header className="relative bg-gradient-to-b from-white to-slate-50 py-16 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 hero-background-image bg-cover bg-center opacity-5"></div>
+      <header className="relative bg-gradient-to-b from-white to-slate-50 py-14 md:py-20 overflow-hidden">
+        <div className="absolute inset-0 hero-background-image bg-cover bg-center opacity-5" />
+
         <div className="relative max-w-7xl mx-auto px-6 lg:flex items-center gap-12">
+          {/* COLUNA TEXTO */}
           <div className="lg:w-1/2">
-            <span className="inline-block text-sm font-semibold text-amber-600 uppercase tracking-widest mb-4">
-              <FontAwesomeIcon icon={faStar} className="mr-1" /> DAQ ESSENCIAL
+            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-amber-600 uppercase tracking-[0.18em] mb-4">
+              <FontAwesomeIcon icon={faStar} className="text-[10px]" />
+              DAQ ESSENCIAL
             </span>
-            <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-              O Caminho Para Quebrar seu Ciclo de Reprovações e Finalmente Conquistar sua Aprovação em 1 Ano.
+
+            <h1
+              className="
+                text-3xl sm:text-4xl lg:text-[2.8rem] xl:text-[3rem]
+                font-bold text-slate-900
+                leading-snug sm:leading-snug lg:leading-[1.15]
+                max-w-xl
+              "
+            >
+              <span className="block">
+                O caminho para <span className="whitespace-nowrap">quebrar seu</span>
+              </span>
+              <span className="block mt-1">
+                <span className="rounded-md bg-amber-50 px-2 py-1 text-emerald-700">
+                  ciclo de reprovações
+                </span>
+              </span>
+              <span className="block mt-2">
+                e finalmente conquistar sua
+              </span>
+              <span className="block mt-1">
+                aprovação em{' '}
+                <span className="rounded-md bg-emerald-600 px-2 py-1 text-white shadow-sm">
+                  1 ano
+                </span>
+                .
+              </span>
             </h1>
-            <p className="mt-6 text-lg text-slate-600 max-w-lg">
-              Um método simples, baseado em questões, neurociência e clareza mental, para estudar sem caos, aprender de
-              verdade e parar de repetir o mesmo ciclo todos os anos.
+
+            <p className="mt-6 text-base sm:text-lg text-slate-600 max-w-xl">
+              Um método simples, baseado em questões, neurociência e clareza mental,
+              para estudar sem caos, aprender de verdade e parar de repetir o mesmo
+              ciclo todos os anos.
             </p>
-            <div className="mt-12 flex items-center gap-4 flex-wrap">
-              <span className="text-sm text-slate-500">Aprovado em bancas como:</span>
-              <div className="flex gap-6 items-center">
-                <Image src="/img/FGV.webp" alt="FGV" width={80} height={24} className="h-6 w-auto" />
-                <Image src="/img/cespe.webp" alt="Cespe" width={90} height={24} className="h-6 w-auto" />
-                <Image src="/img/fcc-1.webp" alt="FCC" width={50} height={24} className="h-6 w-auto" />
+
+            <div className="mt-10 flex items-center gap-4 flex-wrap">
+              <span className="text-xs sm:text-sm text-slate-500">
+                Aprovado em bancas como:
+              </span>
+              <div className="flex gap-6 items-center opacity-80">
+                <Image
+                  src="/img/FGV.webp"
+                  alt="FGV"
+                  width={80}
+                  height={24}
+                  className="h-6 w-auto"
+                />
+                <Image
+                  src="/img/cespe.webp"
+                  alt="Cespe"
+                  width={90}
+                  height={24}
+                  className="h-6 w-auto"
+                />
+                <Image
+                  src="/img/fcc-1.webp"
+                  alt="FCC"
+                  width={50}
+                  height={24}
+                  className="h-6 w-auto"
+                />
               </div>
             </div>
           </div>
-          <div className="mt-12 lg:mt-0 lg:w-1/2 relative">
-            <div className="relative">
+
+          {/* COLUNA IMAGEM */}
+          <div className="mt-10 lg:mt-0 lg:w-1/2 relative">
+            <div className="relative max-w-xl ml-auto">
+              <div className="absolute -inset-6 bg-amber-100/40 blur-3xl rounded-[2.5rem] -z-10" />
               <Image
-                className="w-full max-w-lg mx-auto rounded-2xl shadow-xl border-4 border-white"
+                className="w-full rounded-2xl shadow-2xl border-4 border-white object-cover"
                 src="/img/Aluno-estudando.webp"
                 width={1280}
                 height={853}
                 alt="Estudo por questões"
-                priority={true}
+                priority
               />
-              <div className="absolute -bottom-4 -right-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg">
-                Método Comprovado
+              <div className="absolute -bottom-4 right-6">
+                <span className="inline-flex items-center gap-2 bg-amber-500 text-white text-xs sm:text-sm font-semibold py-2 px-4 rounded-full shadow-lg">
+                  <span className="inline-block h-2 w-2 rounded-full bg-white animate-pulse" />
+                  Método comprovado na prática
+                </span>
               </div>
             </div>
           </div>
         </div>
       </header>
+
 
       {/* Seção Faixa de Destaque */}
       <section className="bg-amber-50 py-4 text-center text-sm font-medium text-amber-800 tracking-wide shine">
