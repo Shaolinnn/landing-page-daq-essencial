@@ -63,36 +63,33 @@ export default function HomePage() {
 
             <h1
               className="
-                text-3xl sm:text-4xl lg:text-[2.8rem] xl:text-[3rem]
+                text-3xl sm:text-4xl lg:text-[3rem]
                 font-bold text-slate-900
-                leading-snug sm:leading-snug lg:leading-[1.15]
-                max-w-xl
+                leading-tight tracking-tight
+                max-w-2xl
               "
             >
-              <span className="block">
-                O caminho para <span className="whitespace-nowrap">quebrar seu</span>
-              </span>
+              <span className="block">O Caminho Para Quebrar</span>
+
               <span className="block mt-1">
-                <span className="rounded-md bg-amber-50 px-2 py-1 text-emerald-700">
-                  ciclo de reprovações
+                Seu{' '}
+                <span className="inline-block rounded-md bg-amber-50 px-2 py-1 text-emerald-700">
+                  Ciclo de Reprovações
                 </span>
               </span>
+
               <span className="block mt-2">
-                e finalmente conquistar sua
-              </span>
-              <span className="block mt-1">
-                aprovação em{' '}
-                <span className="rounded-md bg-emerald-600 px-2 py-1 text-white shadow-sm">
-                  1 ano
+                E Finalmente Conquistar Sua Aprovação em{' '}
+                <span className="inline-flex items-center rounded-md bg-emerald-600 px-3 py-1 text-white shadow-sm">
+                  1 Ano
                 </span>
                 .
               </span>
             </h1>
 
             <p className="mt-6 text-base sm:text-lg text-slate-600 max-w-xl">
-              Um método simples, baseado em questões, neurociência e clareza mental,
-              para estudar sem caos, aprender de verdade e parar de repetir o mesmo
-              ciclo todos os anos.
+              Um método simples, baseado em questões, neurociência e clareza mental, para estudar sem
+              caos, aprender de verdade e parar de repetir o mesmo ciclo todos os anos.
             </p>
 
             <div className="mt-10 flex items-center gap-4 flex-wrap">
@@ -147,6 +144,7 @@ export default function HomePage() {
           </div>
         </div>
       </header>
+
 
 
       {/* Seção Faixa de Destaque */}
