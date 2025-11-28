@@ -5,6 +5,7 @@
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { ReactNode } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -19,7 +20,7 @@ import 'swiper/css/navigation';
 
 type Testimonial = {
   image: string;
-  text: string;
+  text: ReactNode;
   author: string;
   role: string;
 };
@@ -69,15 +70,23 @@ const testimonialsData: Testimonial[] = [
   },
   // Depoimento – Lucas
   {
-    image: '/img/video-lucas.jpg',
+    image: '/img/video-lucas.jpg', // ajuste se o caminho da imagem for diferente
     text: '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
     author: 'Lucas',
     role: 'Aprovado GCM Poços de Caldas/MG',
   },
-  // Novo depoimento – evolução em matemática
+  // Novo depoimento – evolução em matemática (com negrito)
   {
     image: '/img/depoimento_9.jpg',
-    text: '“Depois que comecei a aplicar o método SPQ, nunca tinha conseguido tanta constância de estudar todos os dias como agora. Isso refletiu em toda a minha vida — e, mesmo tendo extrema dificuldade em matemática, insisti no método e hoje parece loucura o quanto estou conseguindo evoluir na matéria.”',
+    text: (
+      <>
+        “Depois que comecei a aplicar o método SPQ, nunca tinha conseguido tanta constância de
+        estudar todos os dias como agora. Isso refletiu em toda a minha vida — e,{' '}
+        <strong>mesmo tendo extrema dificuldade em matemática</strong>, insisti no método e hoje
+        parece loucura o quanto estou{' '}
+        <strong>evoluindo na matéria</strong>.”
+      </>
+    ),
     author: 'Aluno DAQ',
     role: 'Mais constância e avanço em Matemática',
   },
@@ -90,15 +99,12 @@ export default function TestimonialsSection() {
         {/* Cabeçalho da seção */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
-            <FontAwesomeIcon
-              icon={faQuoteLeft}
-              className="text-amber-500 mr-2"
-            />
+            <FontAwesomeIcon icon={faQuoteLeft} className="text-amber-500 mr-2" />
             Histórias reais de quem aplicou o Método SPQ
           </h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-base md:text-lg">
-            Concurseiros comuns que saíram do caos de PDFs, organizaram os
-            estudos e voltaram a acreditar na aprovação estudando por questões.
+            Concurseiros comuns que saíram do caos de PDFs, organizaram os estudos e voltaram a
+            acreditar na aprovação estudando por questões.
           </p>
         </div>
 
@@ -164,9 +170,7 @@ export default function TestimonialsSection() {
                       <h4 className="font-semibold text-slate-800">
                         {testimonial.author}
                       </h4>
-                      <p className="text-sm text-slate-500">
-                        {testimonial.role}
-                      </p>
+                      <p className="text-sm text-slate-500">{testimonial.role}</p>
                     </div>
                   </div>
                 </div>
