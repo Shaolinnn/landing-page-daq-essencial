@@ -67,12 +67,19 @@ const testimonialsData: Testimonial[] = [
     author: 'Aluno DAQ',
     role: 'Virada de chave',
   },
-  // NOVO DEPOIMENTO – Lucas
+  // Depoimento – Lucas
   {
-    image: '/img/video-lucas.jpg', 
+    image: '/img/video-lucas.jpg',
     text: '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
     author: 'Lucas',
     role: 'Aprovado GCM Poços de Caldas/MG',
+  },
+  // Novo depoimento – evolução em matemática
+  {
+    image: '/img/depoimento_9.jpg',
+    text: '“Depois que comecei a aplicar o método SPQ, nunca tinha conseguido tanta constância de estudar todos os dias como agora. Isso refletiu em toda a minha vida — e, mesmo tendo extrema dificuldade em matemática, insisti no método e hoje parece loucura o quanto estou conseguindo evoluir na matéria.”',
+    author: 'Aluno DAQ',
+    role: 'Mais constância e avanço em Matemática',
   },
 ];
 
