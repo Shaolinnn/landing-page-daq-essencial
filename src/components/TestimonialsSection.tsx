@@ -114,7 +114,7 @@ const testimonialsData: Testimonial[] = [
   },
   // Novo depoimento – Mãe de duas crianças (depoimento_11)
   {
-    image: '/img/depoimento_10.jpg',
+    image: '/img/depoimento_11.jpg', // se o arquivo tiver outro nome, ajuste este path
     text: (
       <>
         “Sou mãe de duas crianças pequenas e PDF + videoaula já estavam inviáveis pra mim.
@@ -142,7 +142,11 @@ export default function TestimonialsSection() {
     ? testimonialsData
     : testimonialsData.slice(0, INITIAL_VISIBLE);
 
-  const hasMore = testimonialsData.length > INITIAL_VISIBLE && !showAll;
+  const hasToggle = testimonialsData.length > INITIAL_VISIBLE;
+
+  const buttonLabel = showAll
+    ? 'Ver menos depoimentos'
+    : 'Ver mais depoimentos';
 
   return (
     <section className="py-16 bg-slate-50">
@@ -199,15 +203,16 @@ export default function TestimonialsSection() {
           ))}
         </div>
 
-        {/* Botão "Ver mais" */}
-        {hasMore && (
+        {/* Botão "Ver mais / Ver menos" */}
+        {hasToggle && (
           <div className="mt-10 flex justify-center">
             <button
               type="button"
-              onClick={() => setShowAll(true)}
+              onClick={() => setShowAll((prev) => !prev)}
               className="inline-flex items-center justify-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-amber-600 transition-colors"
+              aria-expanded={showAll}
             >
-              Ver mais depoimentos
+              {buttonLabel}
             </button>
           </div>
         )}
