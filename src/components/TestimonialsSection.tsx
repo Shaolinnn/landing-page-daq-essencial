@@ -54,18 +54,28 @@ const testimonialsData: Testimonial[] = [
   },
   {
     image: '/img/depoimento_6.webp',
-    text: 'Conheci a Kyrlla e comecei a estudar só por questões. Pela primeira vez, vi minha evolução acontecer nas questões.',
+    text: (
+      <>
+        “Se eu puder dar um conselho pra quem ainda está perdido ou sente que estuda muito
+        mas não vê resultado: <strong>abandona o excesso de teoria e mergulha nas
+        questões</strong>. Erra, aprende, acerta, evolui.{' '}
+        <strong>
+          Estudar por questões mudou completamente minha forma de aprender
+        </strong>{' '}
+        — e foi o que me levou a finalmente ver resultado.”
+      </>
+    ),
     author: 'Aluno DAQ',
-    role: 'Virada de chave',
+    role: 'Virada de chave com estudo por questões',
   },
-  // Depoimento – Lucas (imagem pode ser a mesma da thumb do vídeo)
+  // Depoimento – Lucas
   {
     image: '/img/video-lucas.jpg', // ajuste esse path se o arquivo tiver outro nome
     text: '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
     author: 'Lucas',
     role: 'Aprovado GCM Poços de Caldas/MG',
   },
-  // Novo depoimento – evolução em matemática (com negrito)
+  // Depoimento – Matemática (com negrito)
   {
     image: '/img/depoimento_9.jpg',
     text: (
