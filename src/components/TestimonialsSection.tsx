@@ -57,8 +57,9 @@ const testimonialsData: Testimonial[] = [
     text: (
       <>
         “Se eu puder dar um conselho pra quem ainda está perdido ou sente que estuda muito
-        mas não vê resultado: <strong>abandona o excesso de teoria e mergulha nas
-        questões</strong>. Erra, aprende, acerta, evolui.{' '}
+        mas não vê resultado:{' '}
+        <strong>abandona o excesso de teoria e mergulha nas questões</strong>. Erra,
+        aprende, acerta, evolui.{' '}
         <strong>
           Estudar por questões mudou completamente minha forma de aprender
         </strong>{' '}
@@ -68,20 +69,20 @@ const testimonialsData: Testimonial[] = [
     author: 'Aluno DAQ',
     role: 'Virada de chave com estudo por questões',
   },
-  // Depoimento – Lucas
+  // Depoimento – Lucas (vídeo GCM Poços de Caldas)
   {
-    image: '/img/video-lucas.jpg', // ajuste esse path se o arquivo tiver outro nome
+    image: '/img/video-lucas.jpg', // ajuste se o nome da imagem for diferente
     text: '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
     author: 'Lucas',
     role: 'Aprovado GCM Poços de Caldas/MG',
   },
-  // Depoimento – Matemática (com negrito)
+  // Depoimento – Matemática (Telegram)
   {
     image: '/img/depoimento_9.jpg',
     text: (
       <>
-        “Depois que comecei a aplicar o método SPQ, nunca tinha conseguido tanta constância de
-        estudar todos os dias como agora. Isso refletiu em toda a minha vida — e,{' '}
+        “Depois que comecei a aplicar o método SPQ, nunca tinha conseguido tanta constância
+        de estudar todos os dias como agora. Isso refletiu em toda a minha vida — e,{' '}
         <strong>mesmo tendo extrema dificuldade em matemática</strong>, insisti no método e
         hoje parece loucura o quanto estou{' '}
         <strong>evoluindo na matéria</strong>.”
@@ -89,6 +90,46 @@ const testimonialsData: Testimonial[] = [
     ),
     author: 'Aluno DAQ',
     role: 'Mais constância e avanço em Matemática',
+  },
+  // Novo depoimento – Pulo do gato (depoimento_7.webp)
+  {
+    image: '/img/depoimento_7.webp',
+    text: (
+      <>
+        “Sou aluno do DAQ/SPQ e o método é ótimo, super recomendo e indico. Ele foi criado
+        pensando em{' '}
+        <strong>estudar as questões e não apenas resolver questões</strong> — esse é o
+        ‘pulo do gato’. A teoria a gente aprende com o estudo das questões, a partir dos
+        comentários dos professores e do fórum dos alunos. É um método dinâmico, prático e
+        ativo, e é{' '}
+        <strong>
+          libertador não precisar ficar preso em PDFs gigantes e videoaulas intermináveis
+        </strong>
+        : já parte logo pras questões, e são elas que vão te ensinar. Está valendo muito a
+        pena.”
+      </>
+    ),
+    author: 'Aluno DAQ',
+    role: 'Libertador sair dos PDFs e videoaulas',
+  },
+  // Novo depoimento – Mãe de duas crianças (depoimento_11)
+  {
+    image: '/img/depoimento_11.jpg', // se o arquivo se chamar "depoimento_11_jpg", ajuste este path
+    text: (
+      <>
+        “Sou mãe de duas crianças pequenas e PDF + videoaula já estavam inviáveis pra mim.
+        Quando entrei no método da Kyrlla, achei caro, mas hoje vejo que{' '}
+        <strong>é muito pouco investimento perto do tanto que ela entrega</strong>. Ainda
+        estou me adaptando, mas já evoluí muito em rotina: agora consigo{' '}
+        <strong>
+          estudar sem me sufocar, brincar com meus filhos e ter vida fora dos estudos
+        </strong>
+        . O método é surreal — é nítido o quanto ela entrega, e já estou trazendo mais
+        gente pro DAQ.”
+      </>
+    ),
+    author: 'Andressa',
+    role: 'Mãe de duas crianças — rotina mais leve',
   },
 ];
 
@@ -150,9 +191,7 @@ export default function TestimonialsSection() {
                 </div>
 
                 <div className="mt-auto border-t border-slate-100 pt-4">
-                  <h4 className="font-semibold text-slate-800">
-                    {testimonial.author}
-                  </h4>
+                  <h4 className="font-semibold text-slate-800">{testimonial.author}</h4>
                   <p className="text-sm text-slate-500">{testimonial.role}</p>
                 </div>
               </div>
