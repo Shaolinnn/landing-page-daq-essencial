@@ -133,16 +133,17 @@ const testimonialsData: Testimonial[] = [
   },
   // Novo depoimento – Gabriel "Só agradecer!"
   {
-    image: '/img/depoimento_11.jpg',
-    text: (
-      <>
-        “Hoje faz 1 ano que estou no SPQ e esse print mostra um pouco da minha jornada. Só
-        tenho a agradecer à Kyrlla — você abriu meus olhos.{' '}
-        <strong>Queria ter conhecido esse método antes</strong>.”
-      </>
-    ),
-    author: 'Gabriel',
-    role: '1 ano de SPQ — milhares de questões e 80% de acertos',
+  image: '/img/depoimento_11.jpg',
+  text: (
+    <>
+      “Hoje faz 1 ano que estou no SPQ e esse print mostra um pouco da minha jornada. Só
+      tenho a agradecer à Kyrlla — você abriu meus olhos. Queria ter conhecido esse método
+      antes. Em 1 ano, já são{' '}
+      <strong>24.607 questões resolvidas, 19.727 acertos e 80,17% de taxa de acerto</strong>.”
+    </>
+  ),
+  author: 'Gabriel',
+  role: '1 ano de SPQ — milhares de questões e 80% de acertos',
   },
 ];
 
