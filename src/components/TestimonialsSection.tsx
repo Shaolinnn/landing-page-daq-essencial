@@ -114,7 +114,7 @@ const testimonialsData: Testimonial[] = [
   },
   // Novo depoimento – Mãe de duas crianças (depoimento_11)
   {
-    image: '/img/depoimento_11.jpg', // se o arquivo se chamar "depoimento_11_jpg", ajuste este path
+    image: '/img/depoimento_10.jpg',
     text: (
       <>
         “Sou mãe de duas crianças pequenas e PDF + videoaula já estavam inviáveis pra mim.
