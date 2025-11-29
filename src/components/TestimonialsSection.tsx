@@ -91,7 +91,7 @@ const testimonialsData: Testimonial[] = [
     author: 'Aluno DAQ',
     role: 'Mais constância e avanço em Matemática',
   },
-  // Novo depoimento – Pulo do gato (depoimento_7.webp)
+  // Depoimento – Pulo do gato (depoimento_7.webp)
   {
     image: '/img/depoimento_7.webp',
     text: (
@@ -112,7 +112,7 @@ const testimonialsData: Testimonial[] = [
     author: 'Aluno DAQ',
     role: 'Libertador sair dos PDFs e videoaulas',
   },
-  // Novo depoimento – Mãe de duas crianças (depoimento_11)
+  // Depoimento – Mãe de duas crianças (print do Telegram)
   {
     image: '/img/depoimento_10.jpg',
     text: (
@@ -130,6 +130,19 @@ const testimonialsData: Testimonial[] = [
     ),
     author: 'Andressa',
     role: 'Mãe de duas crianças — rotina mais leve',
+  },
+  // Novo depoimento – Gabriel "Só agradecer!"
+  {
+    image: '/img/depoimento_11.jpg',
+    text: (
+      <>
+        “Hoje faz 1 ano que estou no SPQ e esse print mostra um pouco da minha jornada. Só
+        tenho a agradecer à Kyrlla — você abriu meus olhos.{' '}
+        <strong>Queria ter conhecido esse método antes</strong>.”
+      </>
+    ),
+    author: 'Gabriel',
+    role: '1 ano de SPQ — milhares de questões e 80% de acertos',
   },
 ];
 
