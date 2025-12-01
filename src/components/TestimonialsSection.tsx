@@ -16,6 +16,34 @@ type Testimonial = {
 };
 
 const testimonialsData: Testimonial[] = [
+  // 1) PRIORIDADE – resultado em poucos dias
+  {
+    image: '/img/depoimento_8.webp',
+    text: (
+      <>
+        “Em 7 dias aplicando o método, finalizei um caderno com 90% de acertos e cheguei a
+        73% de aproveitamento em 602 questões. Esse método reacendeu em mim uma vontade
+        insana de estudar.”
+      </>
+    ),
+    author: 'Aluno DAQ',
+    role: 'Resultados em 7 dias',
+  },
+  // 2) PRIORIDADE – 1 ano de SPQ, milhares de questões
+  {
+    image: '/img/depoimento_11.jpg',
+    text: (
+      <>
+        “Hoje faz 1 ano que estou no SPQ e esse print mostra um pouco da minha jornada. Só
+        tenho a agradecer à Kyrlla — você abriu meus olhos. Queria ter conhecido esse método
+        antes. Em 1 ano, já são{' '}
+        <strong>24.607 questões resolvidas, 19.727 acertos e 80,17% de taxa de acerto</strong>.”
+      </>
+    ),
+    author: 'Gabriel',
+    role: '1 ano de SPQ — milhares de questões e 80% de acertos',
+  },
+  // 3) Demais depoimentos (ordem anterior mantida)
   {
     image: '/img/depoimento_1.webp',
     text: 'Não participo dos encontros presenciais e, ainda assim, consegui nota para 12 órgãos. Estou aguardando a nota da redação.',
@@ -33,12 +61,6 @@ const testimonialsData: Testimonial[] = [
     text: 'Ganhei 1 ano em 1 mês! Estou amando o método e indico demais o DAQ Essencial.',
     author: 'Fernanda Sodero',
     role: 'Evolução rápida',
-  },
-  {
-    image: '/img/depoimento_8.webp',
-    text: 'Em 7 dias aplicando o método, finalizei um caderno com 90% de acertos e cheguei a 73% de aproveitamento em 602 questões. Esse método reacendeu em mim uma vontade insana de estudar.',
-    author: 'Aluno DAQ',
-    role: 'Resultados em 7 dias',
   },
   {
     image: '/img/depoimento_4.webp',
@@ -130,20 +152,6 @@ const testimonialsData: Testimonial[] = [
     ),
     author: 'Andressa',
     role: 'Mãe de duas crianças — rotina mais leve',
-  },
-  // Novo depoimento – Gabriel "Só agradecer!"
-  {
-    image: '/img/depoimento_11.jpg',
-    text: (
-      <>
-        “Hoje faz 1 ano que estou no SPQ e esse print mostra um pouco da minha jornada. Só
-        tenho a agradecer à Kyrlla — você abriu meus olhos. Queria ter conhecido esse método
-        antes. Em 1 ano, já são{' '}
-        <strong>24.607 questões resolvidas, 19.727 acertos e 80,17% de taxa de acerto</strong>.”
-      </>
-    ),
-    author: 'Gabriel',
-    role: '1 ano de SPQ — milhares de questões e 80% de acertos',
   },
 ];
 
