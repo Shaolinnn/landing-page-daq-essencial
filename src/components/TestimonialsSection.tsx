@@ -3,7 +3,7 @@
 'use client';
 
 import Image from 'next/image';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
@@ -71,7 +71,7 @@ const testimonialsData: Testimonial[] = [
   },
   // Depoimento – Lucas (vídeo GCM Poços de Caldas)
   {
-    image: '/img/video-lucas.jpg', // ajuste se o nome da imagem for diferente
+    image: '/img/video-lucas.jpg', // ajuste o nome se for diferente no projeto
     text: '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
     author: 'Lucas',
     role: 'Aprovado GCM Poços de Caldas/MG',
@@ -133,35 +133,21 @@ const testimonialsData: Testimonial[] = [
   },
   // Novo depoimento – Gabriel "Só agradecer!"
   {
-  image: '/img/depoimento_11.jpg',
-  text: (
-    <>
-      “Hoje faz 1 ano que estou no SPQ e esse print mostra um pouco da minha jornada. Só
-      tenho a agradecer à Kyrlla — você abriu meus olhos. Queria ter conhecido esse método
-      antes. Em 1 ano, já são{' '}
-      <strong>24.607 questões resolvidas, 19.727 acertos e 80,17% de taxa de acerto</strong>.”
-    </>
-  ),
-  author: 'Gabriel',
-  role: '1 ano de SPQ — milhares de questões e 80% de acertos',
+    image: '/img/depoimento_11.jpg',
+    text: (
+      <>
+        “Hoje faz 1 ano que estou no SPQ e esse print mostra um pouco da minha jornada. Só
+        tenho a agradecer à Kyrlla — você abriu meus olhos. Queria ter conhecido esse método
+        antes. Em 1 ano, já são{' '}
+        <strong>24.607 questões resolvidas, 19.727 acertos e 80,17% de taxa de acerto</strong>.”
+      </>
+    ),
+    author: 'Gabriel',
+    role: '1 ano de SPQ — milhares de questões e 80% de acertos',
   },
 ];
 
-const INITIAL_VISIBLE = 6;
-
 export default function TestimonialsSection() {
-  const [showAll, setShowAll] = useState(false);
-
-  const visibleTestimonials = showAll
-    ? testimonialsData
-    : testimonialsData.slice(0, INITIAL_VISIBLE);
-
-  const hasToggle = testimonialsData.length > INITIAL_VISIBLE;
-
-  const buttonLabel = showAll
-    ? 'Ver menos depoimentos'
-    : 'Ver mais depoimentos';
-
   return (
     <section className="py-16 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6">
@@ -177,9 +163,9 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        {/* Grid de depoimentos */}
+        {/* Grid de depoimentos – todos visíveis */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {visibleTestimonials.map((testimonial, index) => (
+          {testimonialsData.map((testimonial, index) => (
             <article
               key={`${testimonial.author}-${index}`}
               className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col border border-slate-100 transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl"
@@ -216,20 +202,6 @@ export default function TestimonialsSection() {
             </article>
           ))}
         </div>
-
-        {/* Botão "Ver mais / Ver menos" */}
-        {hasToggle && (
-          <div className="mt-10 flex justify-center">
-            <button
-              type="button"
-              onClick={() => setShowAll((prev) => !prev)}
-              className="inline-flex items-center justify-center rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-amber-600 transition-colors"
-              aria-expanded={showAll}
-            >
-              {buttonLabel}
-            </button>
-          </div>
-        )}
       </div>
     </section>
   );

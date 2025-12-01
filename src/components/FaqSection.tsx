@@ -155,9 +155,9 @@ const faqGroups: FaqGroup[] = [
     ],
   },
   {
-    title: 'FAQ 3 — Sobre acesso, valor, garantia e mentoria',
+    title: 'FAQ 3 — Sobre acesso, valor, bônus e garantia',
     description:
-      'O que você precisa saber sobre tempo de acesso, mentoria, preço, garantia e renovação.',
+      'O que você precisa saber sobre tempo de acesso, mentoria, bônus do aluno e garantia.',
     items: [
       {
         question: '8. O DAQ Essencial dá acesso à mentoria?',
@@ -183,18 +183,24 @@ const faqGroups: FaqGroup[] = [
         ),
       },
       {
-        question: '9. Tem promoção, cupom ou desconto de Black Friday?',
+        question: '9. Quais bônus eu ganho ao entrar no DAQ Essencial?',
         answer: (
           <>
-            Não.
-            <br />
-            <br />
-            O preço é <strong>estável</strong> — não aumentamos antes para “fingir desconto
-            depois”.
-            <br />
-            <br />
-            O único benefício é o <strong>cupom de 20% no TEC</strong>, exclusivo para alunos, para
-            nova assinatura, renovação ou upgrade.
+            Ao se tornar aluno do DAQ Essencial, você desbloqueia bônus que reforçam o método no dia
+            a dia:
+            <ul className="list-disc list-inside mt-2 space-y-1">
+              <li>
+                <strong>Comunidade de alunos no Telegram</strong> para trocar dúvidas, dividir
+                resultados, manter a motivação e caminhar junto com outros concurseiros que aplicam
+                o mesmo método.
+              </li>
+              <li>
+                <strong>Cupom de 20% de desconto no TEC Concursos</strong>, válido para qualquer
+                plano (nova assinatura, renovação ou upgrade), exclusivo para alunos do DAQ.
+              </li>
+            </ul>
+            Esses bônus não são “brinde de Black Friday”: fazem parte da estrutura pensada para você
+            conseguir aplicar o SPQ na prática.
           </>
         ),
       },
@@ -208,26 +214,6 @@ const faqGroups: FaqGroup[] = [
             Você pode entrar no curso, assistir às aulas iniciais, montar seus cadernos no TEC e
             começar a aplicar o método. Se <strong>não fizer sentido</strong> para você, basta
             pedir reembolso dentro do prazo.
-          </>
-        ),
-      },
-      {
-        question: '11. Posso renovar minha assinatura com desconto?',
-        answer: (
-          <>
-            Não existe mais política de renovação com desconto.
-            <br />
-            <br />
-            A diretriz atual é:
-            <ul className="list-disc list-inside mt-2 space-y-1">
-              <li>
-                Quem quer continuar <strong>compra o DAQ Essencial novamente</strong> pelo valor
-                vigente.
-              </li>
-              <li>
-                A Mentoria continua aparecendo <strong>apenas como upgrade</strong> dentro do curso.
-              </li>
-            </ul>
           </>
         ),
       },
@@ -250,9 +236,9 @@ export default function FaqSection() {
             <FontAwesomeIcon icon={faQuestionCircle} className="text-amber-500 mr-2" />
             Perguntas frequentes
           </h2>
-          <p className="text-slate-600 max-w-2xl mx-auto">
-            Tire suas dúvidas sobre o Método SPQ, o DAQ Essencial, o uso do TEC Concursos e a
-            Mentoria SPQ.
+        <p className="text-slate-600 max-w-2xl mx-auto">
+            Tire suas dúvidas sobre o Método SPQ, o DAQ Essencial, o uso do TEC Concursos, a
+            Mentoria SPQ e os bônus de aluno.
           </p>
         </div>
 
