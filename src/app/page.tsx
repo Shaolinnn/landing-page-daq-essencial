@@ -40,6 +40,7 @@ import {
   faCopyright,
   faLock,
   faInfoCircle,
+  faTicketAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
@@ -466,8 +467,9 @@ export default function HomePage() {
               Um método que muda a sua lógica de estudo pra sempre
             </p>
           </div>
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="bg-white p-8 rounded-2xl shadow-lg border-2 border-emerald-200 text-center relative">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            {/* Card de Preço */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg border-2 border-emerald-200 text-center relative h-full flex flex-col justify-center">
               <span className="absolute -top-3 -right-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">
                 7 dias de garantia
               </span>
@@ -513,23 +515,44 @@ export default function HomePage() {
                 <FontAwesomeIcon icon={faWhatsapp} className="mr-2" /> Ainda está com dúvida. Fale com a gente
               </a>
             </div>
+
+            {/* Lista de Bônus */}
             <div>
               <h4 className="text-xl font-semibold text-amber-600 mb-4 flex items-center">
                 <FontAwesomeIcon icon={faGift} className="mr-2" /> Bônus especiais:
               </h4>
               <div className="space-y-4">
+                {/* Bônus 1: Desconto TEC */}
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
+                  <h5 className="font-semibold text-slate-800 flex items-center gap-2">
+                    <FontAwesomeIcon icon={faTicketAlt} className="text-amber-500" /> Cupom de 20% no TEC
+                  </h5>
+                  <p className="text-sm text-slate-600 mt-1">Desconto exclusivo para assinatura, renovação ou upgrade.</p>
+                </div>
+
+                 {/* Bônus 2: Comunidade */}
+                 <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
+                  <h5 className="font-semibold text-slate-800 flex items-center gap-2">
+                    <FontAwesomeIcon icon={faUsers} className="text-amber-500" /> Comunidade Exclusiva de Alunos
+                  </h5>
+                  <p className="text-sm text-slate-600 mt-1">Networking, troca de dúvidas e suporte.</p>
+                </div>
+
+                {/* Bônus 3 */}
                 <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
                   <h5 className="font-semibold text-slate-800 flex items-center gap-2">
                     <FontAwesomeIcon icon={faMapMarkedAlt} className="text-amber-500" /> Mini Treinamento
                   </h5>
                   <p className="text-sm text-slate-600 mt-1">Mapa de Interpretação de Questões</p>
                 </div>
+                {/* Bônus 4 */}
                 <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
                   <h5 className="font-semibold text-slate-800 flex items-center gap-2">
                     <FontAwesomeIcon icon={faTasks} className="text-amber-500" /> Checklist Exclusivo
                   </h5>
                   <p className="text-sm text-slate-600 mt-1">Os 7 erros que sabotam sua lógica de prova</p>
                 </div>
+                {/* Bônus 5 */}
                 <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
                   <h5 className="font-semibold text-slate-800 flex items-center gap-2">
                     <FontAwesomeIcon icon={faStar} className="text-amber-500" /> Acesso Prioritário

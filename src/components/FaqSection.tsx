@@ -155,12 +155,36 @@ const faqGroups: FaqGroup[] = [
     ],
   },
   {
-    title: 'FAQ 3 — Sobre acesso, valor, bônus e garantia',
+    title: 'FAQ 3 — Sobre acesso, garantia e mentoria',
     description:
-      'O que você precisa saber sobre tempo de acesso, mentoria, bônus do aluno e garantia.',
+      'Tudo sobre como você recebe o curso, tempo de acesso e próximos passos.',
     items: [
       {
-        question: '8. O DAQ Essencial dá acesso à mentoria?',
+        question: '8. Como recebo o acesso ao curso?',
+        answer: (
+          <>
+            O acesso é <strong>IMEDIATO</strong>.
+            <br />
+            <br />
+            Assim que seu pagamento for confirmado, você recebe automaticamente um e-mail com seus dados de login.
+            Você pode começar a assistir às aulas, entrar na comunidade e aplicar o método <strong>agora mesmo</strong>.
+          </>
+        ),
+      },
+      {
+        question: '9. Por quanto tempo terei acesso?',
+        answer: (
+          <>
+            Você terá <strong>1 ano de acesso completo</strong> ao curso.
+            <br />
+            <br />
+            Esse tempo é mais do que suficiente para você maratonar o conteúdo, implementar o método,
+            revisar as aulas quantas vezes quiser e consultar o material sempre que tiver dúvida durante sua preparação.
+          </>
+        ),
+      },
+      {
+        question: '10. O DAQ Essencial dá acesso à mentoria?',
         answer: (
           <>
             O DAQ é sempre o <strong>primeiro passo</strong>.
@@ -176,36 +200,11 @@ const faqGroups: FaqGroup[] = [
             </ul>
             <br />
             Ela <strong>não é vendida separadamente</strong>.
-            <br />
-            <br />
-            O acesso ao DAQ Essencial é de <strong>1 ano</strong>.
           </>
         ),
       },
       {
-        question: '9. Quais bônus eu ganho ao entrar no DAQ Essencial?',
-        answer: (
-          <>
-            Ao se tornar aluno do DAQ Essencial, você desbloqueia bônus que reforçam o método no dia
-            a dia:
-            <ul className="list-disc list-inside mt-2 space-y-1">
-              <li>
-                <strong>Comunidade de alunos no Telegram</strong> para trocar dúvidas, dividir
-                resultados, manter a motivação e caminhar junto com outros concurseiros que aplicam
-                o mesmo método.
-              </li>
-              <li>
-                <strong>Cupom de 20% de desconto no TEC Concursos</strong>, válido para qualquer
-                plano (nova assinatura, renovação ou upgrade), exclusivo para alunos do DAQ.
-              </li>
-            </ul>
-            Esses bônus não são “brinde de Black Friday”: fazem parte da estrutura pensada para você
-            conseguir aplicar o SPQ na prática.
-          </>
-        ),
-      },
-      {
-        question: '10. Tem garantia?',
+        question: '11. Tem garantia?',
         answer: (
           <>
             Sim! Você tem <strong>7 dias de garantia total</strong>.
