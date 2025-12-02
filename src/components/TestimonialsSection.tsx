@@ -16,7 +16,11 @@ type Testimonial = {
 };
 
 const testimonialsData: Testimonial[] = [
-  // 1) PRIORIDADE – resultado em poucos dias
+  // ----------------------------------------------------------------------
+  // BLOCO 1: TEMPO / RESULTADO RÁPIDO (A PROVA DE QUE O MÉTODO FUNCIONA)
+  // ----------------------------------------------------------------------
+
+  // 1) 7 dias de método (Resultado Imediato)
   {
     image: '/img/depoimento_8.webp',
     text: (
@@ -29,7 +33,8 @@ const testimonialsData: Testimonial[] = [
     author: 'Aluno DAQ',
     role: 'Resultados em 7 dias',
   },
-  // 2) PRIORIDADE – 1 ano de SPQ, milhares de questões
+
+  // 2) Gabriel (Consistência e Metraca - 1 ano)
   {
     image: '/img/depoimento_11.jpg',
     text: (
@@ -43,62 +48,76 @@ const testimonialsData: Testimonial[] = [
     author: 'Gabriel',
     role: '1 ano de SPQ — milhares de questões e 80% de acertos',
   },
-  // 3) Demais depoimentos (ordem anterior mantida)
+
+  // ----------------------------------------------------------------------
+  // BLOCO 2: PESSOAS SEM TEMPO / ROTINA DIFÍCIL (MATAR OBJEÇÃO DE TEMPO)
+  // ----------------------------------------------------------------------
+
+  // 3) Andressa (Mãe de duas crianças - Sem tempo) -> MOVIDA PARA CÁ CONFORME PEDIDO
   {
-    image: '/img/depoimento_1.webp',
-    text: 'Não participo dos encontros presenciais e, ainda assim, consegui nota para 12 órgãos. Estou aguardando a nota da redação.',
-    author: 'Aluno DAQ',
-    role: 'Aprovado CNU',
+    image: '/img/depoimento_10.jpg',
+    text: (
+      <>
+        “Sou mãe de duas crianças pequenas e PDF + videoaula já estavam inviáveis pra mim.
+        Quando entrei no método da Kyrlla, achei caro, mas hoje vejo que{' '}
+        <strong>é muito pouco investimento perto do tanto que ela entrega</strong>. Ainda
+        estou me adaptando, mas já evoluí muito em rotina: agora consigo{' '}
+        <strong>
+          estudar sem me sufocar, brincar com meus filhos e ter vida fora dos estudos
+        </strong>
+        . O método é surreal — é nítido o quanto ela entrega, e já estou trazendo mais
+        gente pro DAQ.”
+      </>
+    ),
+    author: 'Andressa',
+    role: 'Mãe de duas crianças — rotina mais leve',
   },
+
+  // 4) Lucas (Aprovado em < 10 meses com trabalho + faculdade + esporte)
   {
-    image: '/img/depoimento_2.webp',
-    text: 'Saiu o gabarito preliminar e acertei 38 de 40 questões — errei só 2. Nunca imaginei alcançar algo assim. O DAQ mudou minha forma de estudar.',
-    author: 'Aluno DAQ',
-    role: 'Evolução evidente',
+    image: '/img/video-lucas.jpg', 
+    text: '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
+    author: 'Lucas',
+    role: 'Aprovado GCM Poços de Caldas/MG',
   },
+
+  // 5) Fernanda Sodero (Evolução rápida / Otimização de tempo)
   {
     image: '/img/Depoimento_3.webp',
     text: 'Ganhei 1 ano em 1 mês! Estou amando o método e indico demais o DAQ Essencial.',
     author: 'Fernanda Sodero',
     role: 'Evolução rápida',
   },
-  {
-    image: '/img/depoimento_4.webp',
-    text: 'Sem malabarismo mental, planilhas complexas ou cálculos de horas. O DAQ trouxe simplicidade e resultado como eu nunca tinha visto antes.',
-    author: 'Aluno DAQ',
-    role: 'Método direto ao ponto',
-  },
-  {
+
+   // 6) Aluno TRE-RJ (Rotina adaptada - 80% aplicado)
+   {
     image: '/img/depoimento_5.webp',
     text: 'Não consegui aplicar o método 100% na rotina, mas uns 80% eu apliquei. E deu certo. Deus me deu essa aprovação através do estudo por questões!',
     author: 'Aluno DAQ',
     role: 'Aprovado TRE-RJ',
   },
+
+  // ----------------------------------------------------------------------
+  // BLOCO 3: DEMAIS (APROVAÇÕES, NOTAS ALTAS E METODOLOGIA)
+  // ----------------------------------------------------------------------
+
+  // 7) Aprovado CNU
   {
-    image: '/img/depoimento_6.webp',
-    text: (
-      <>
-        “Se eu puder dar um conselho pra quem ainda está perdido ou sente que estuda muito
-        mas não vê resultado:{' '}
-        <strong>abandona o excesso de teoria e mergulha nas questões</strong>. Erra,
-        aprende, acerta, evolui.{' '}
-        <strong>
-          Estudar por questões mudou completamente minha forma de aprender
-        </strong>{' '}
-        — e foi o que me levou a finalmente ver resultado.”
-      </>
-    ),
+    image: '/img/depoimento_1.webp',
+    text: 'Não participo dos encontros presenciais e, ainda assim, consegui nota para 12 órgãos. Estou aguardando a nota da redação.',
     author: 'Aluno DAQ',
-    role: 'Virada de chave com estudo por questões',
+    role: 'Aprovado CNU',
   },
-  // Depoimento – Lucas (vídeo GCM Poços de Caldas)
+
+  // 8) Nota Alta (38 de 40)
   {
-    image: '/img/video-lucas.jpg', // ajuste o nome se for diferente no projeto
-    text: '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
-    author: 'Lucas',
-    role: 'Aprovado GCM Poços de Caldas/MG',
+    image: '/img/depoimento_2.webp',
+    text: 'Saiu o gabarito preliminar e acertei 38 de 40 questões — errei só 2. Nunca imaginei alcançar algo assim. O DAQ mudou minha forma de estudar.',
+    author: 'Aluno DAQ',
+    role: 'Evolução evidente',
   },
-  // Depoimento – Matemática (Telegram)
+
+  // 9) Matemática (Superação de dificuldade)
   {
     image: '/img/depoimento_9.jpg',
     text: (
@@ -113,7 +132,8 @@ const testimonialsData: Testimonial[] = [
     author: 'Aluno DAQ',
     role: 'Mais constância e avanço em Matemática',
   },
-  // Depoimento – Pulo do gato (depoimento_7.webp)
+
+  // 10) Pulo do Gato (Metodologia)
   {
     image: '/img/depoimento_7.webp',
     text: (
@@ -134,24 +154,32 @@ const testimonialsData: Testimonial[] = [
     author: 'Aluno DAQ',
     role: 'Libertador sair dos PDFs e videoaulas',
   },
-  // Depoimento – Mãe de duas crianças (print do Telegram)
+
+  // 11) Virada de Chave (Conselho)
   {
-    image: '/img/depoimento_10.jpg',
+    image: '/img/depoimento_6.webp',
     text: (
       <>
-        “Sou mãe de duas crianças pequenas e PDF + videoaula já estavam inviáveis pra mim.
-        Quando entrei no método da Kyrlla, achei caro, mas hoje vejo que{' '}
-        <strong>é muito pouco investimento perto do tanto que ela entrega</strong>. Ainda
-        estou me adaptando, mas já evoluí muito em rotina: agora consigo{' '}
+        “Se eu puder dar um conselho pra quem ainda está perdido ou sente que estuda muito
+        mas não vê resultado:{' '}
+        <strong>abandona o excesso de teoria e mergulha nas questões</strong>. Erra,
+        aprende, acerta, evolui.{' '}
         <strong>
-          estudar sem me sufocar, brincar com meus filhos e ter vida fora dos estudos
-        </strong>
-        . O método é surreal — é nítido o quanto ela entrega, e já estou trazendo mais
-        gente pro DAQ.”
+          Estudar por questões mudou completamente minha forma de aprender
+        </strong>{' '}
+        — e foi o que me levou a finalmente ver resultado.”
       </>
     ),
-    author: 'Andressa',
-    role: 'Mãe de duas crianças — rotina mais leve',
+    author: 'Aluno DAQ',
+    role: 'Virada de chave com estudo por questões',
+  },
+
+  // 12) Simplicidade
+  {
+    image: '/img/depoimento_4.webp',
+    text: 'Sem malabarismo mental, planilhas complexas ou cálculos de horas. O DAQ trouxe simplicidade e resultado como eu nunca tinha visto antes.',
+    author: 'Aluno DAQ',
+    role: 'Método direto ao ponto',
   },
 ];
 
