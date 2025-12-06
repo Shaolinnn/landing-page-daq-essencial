@@ -196,7 +196,6 @@ const faqGroups: FaqGroup[] = [
               <li>encontros quinzenais;</li>
               <li>acompanhamento mais próximo;</li>
               <li>suporte individual;</li>
-              <li>comunidade exclusiva.</li>
             </ul>
             <br />
             Ela <strong>não é vendida separadamente</strong>.
