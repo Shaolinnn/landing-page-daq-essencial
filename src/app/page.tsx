@@ -88,9 +88,10 @@ export default function HomePage() {
               "
             >
               Aprenda com a{' '}
-              <span className="text-amber-500 inline-block relative">
+              {/* Alterado de 'inline-block' para 'inline' ou removido o display para fluxo de texto normal */}
+              <span className="text-amber-500 relative whitespace-nowrap">
                 prova
-                {/* Sublinhado SVG */}
+                {/* Sublinhado decorativo */}
                 <svg
                   className="absolute w-full h-3 -bottom-1 left-0 text-amber-200 -z-10"
                   viewBox="0 0 100 10"
