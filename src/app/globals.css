@@ -28,6 +28,7 @@
   }
 
   /* Efeito de brilho OTIMIZADO (GPU Accelerated) */
+  /* Isso corrige o CLS e o Reflow forçado apontado no relatório */
   .shine {
     @apply relative overflow-hidden;
   }
@@ -35,14 +36,15 @@
     content: "";
     position: absolute;
     top: 0;
-    left: 0; /* Fixado em 0, a animação move via transform */
-    width: 100%; /* Ajustado para evitar overflow */
+    left: 0; 
+    width: 100%; 
     height: 100%;
     background: linear-gradient(70deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
-    transform: translateX(-100%); /* Começa fora da tela */
-    animation: shine 4s infinite; /* Reduzi o tempo para ficar mais dinâmico */
+    transform: translateX(-100%); /* Começa fora da tela usando transform (mais leve) */
+    animation: shine 4s infinite; 
     z-index: 10;
-    pointer-events: none; /* Garante que o brilho não bloqueie cliques */
+    pointer-events: none; 
+    will-change: transform; /* Avisa o navegador para preparar a GPU */
   }
 
   /* Estilos para o card de feature com hover */

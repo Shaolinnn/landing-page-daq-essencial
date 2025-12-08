@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-// Carregamento dinâmico para componentes pesados
+// Carregamento dinâmico para componentes pesados (mantido)
 const FaqSection = dynamic(() => import('@/components/FaqSection'));
 const FormModal = dynamic(() => import('@/components/FormModal'));
 const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSection'));
@@ -62,7 +62,8 @@ export default function HomePage() {
       <header className="relative bg-gradient-to-b from-white to-slate-50 py-10 md:py-20 overflow-hidden">
         
         {/* OTIMIZAÇÃO LCP: Imagem de fundo carregada via Next Image e não CSS */}
-        <div className="absolute inset-0 opacity-5 -z-10 select-none pointer-events-none">
+        {/* Isso resolve o problema de "Chain Request" apontado no relatório */}
+        <div className="absolute inset-0 -z-10 select-none pointer-events-none opacity-5">
           <Image 
             src="/img/background-hero.webp" 
             alt="Background Texture"
@@ -106,6 +107,15 @@ export default function HomePage() {
               caos, aprender de verdade e parar de repetir o mesmo ciclo todos os anos.
             </p>
             
+             {/* CTA Principal */}
+             <button
+              onClick={openModal}
+              className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-emerald-500/30 transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg"
+            >
+              <FontAwesomeIcon icon={faTrophy} />
+              Quero garantir minha vaga
+            </button>
+            
              {/* Prova Social Rápida - OTIMIZADA */}
              <div className="mt-8 flex items-center gap-4 text-xs sm:text-sm text-slate-500">
                 <div className="flex -space-x-2">
@@ -134,7 +144,8 @@ export default function HomePage() {
                 height={853}
                 alt="Kyrlla Pattyelly - Método SPQ"
                 priority // Carrega com prioridade máxima (LCP)
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px" // AJUDA O NAVEGADOR A BAIXAR A IMAGEM DO TAMANHO CERTO
+                // AQUI ESTÁ A MÁGICA: sizes diz ao navegador qual tamanho baixar
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px" 
                 quality={85}
               />
               {/* Badge Flutuante */}
