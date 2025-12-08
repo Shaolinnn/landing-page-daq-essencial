@@ -1,7 +1,11 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+
+// --- CONFIGURAÇÃO DE IDs ---
+const GA_MEASUREMENT_ID = "G-D0YYSYX9YH";
+const META_PIXEL_ID = "575682733921732"; // Seu ID já está correto aqui
+// ---------------------------
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.destruindoasquestoes.com.br"),
@@ -26,12 +30,8 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  // Mantém o referrer útil para atribuição sem quebrar privacidade
-  // (equivalente ao que você configurou no servidor)
   referrer: "origin-when-cross-origin",
 };
-
-const GA_MEASUREMENT_ID = "G-D0YYSYX9YH";
 
 // Domínios para cross-domain (linker)
 const CROSS_DOMAIN_LINKER = [
@@ -48,28 +48,53 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
 
-        {/* Contentsquare – mapa de calor / UX */}
+        {/* --- 1) Contentsquare (O "Hotjar" que a Kyrlla mandou) --- */}
         <Script
           id="contentsquare-script"
           src="https://t.contentsquare.net/uxa/8b9c231da4716.js"
           strategy="afterInteractive"
         />
 
-        {/* 1) Carrega a biblioteca do GA4 */}
+        {/* --- 2) Meta Pixel (Facebook) --- */}
+        <Script id="meta-pixel" strategy="afterInteractive">
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '${META_PIXEL_ID}');
+            fbq('track', 'PageView');
+          `}
+        </Script>
+        {/* Fallback para users sem JS */}
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+            alt="Meta Pixel"
+          />
+        </noscript>
+
+        {/* --- 3) Google Analytics 4 (GA4) --- */}
         <Script
           id="ga4-src"
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"
         />
 
-        {/* 2) Inicializa GA4 com linker, sem page_view automático E com debug para todos */}
         <Script id="ga4-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            // Consent Mode v2 básico (opcional — ajusta se usar CMP)
             gtag('consent', 'default', {
               ad_storage: 'denied',
               ad_user_data: 'denied',
@@ -77,76 +102,56 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               analytics_storage: 'granted'
             });
 
-            // Config GA4 sem page_view automático
             gtag('config', '${GA_MEASUREMENT_ID}', {
               send_page_view: false,
               transport_type: 'beacon',
               anonymize_ip: true,
               allow_ad_personalization_signals: false,
               allow_google_signals: false,
-              debug_mode: true, // Força "DebugView" no GA4
+              debug_mode: true,
               linker: {
                 domains: ${JSON.stringify(CROSS_DOMAIN_LINKER)},
                 decoration: 'linker',
               }
             });
 
-            // Cross-domain: auto-link de todos os <a> para domínios configurados
+            // Cross-domain linker manual
             (function() {
               function decorateUrl(url) {
                 try {
                   var u = new URL(url, window.location.origin);
-
-                  // Só decora se for domínio permitido
                   var host = (u.hostname || '').replace(/^www\\./i, '');
                   var isAllowed = ${JSON.stringify(CROSS_DOMAIN_LINKER)}.some(function(domain) {
                     var d = domain.replace(/^www\\./i, '');
                     return host === d || host.endsWith('.' + d);
                   });
                   if (!isAllowed) return url;
-
-                  // Cria um clientId fake (ou poderia chamar gtag('get', ...))
                   var cid = 'cid-' + Math.random().toString(16).slice(2);
                   u.searchParams.set('_gl', 'cid=' + encodeURIComponent(cid));
-
                   return u.toString();
                 } catch (e) {
                   return url;
                 }
               }
-
               function patchLinks() {
                 var anchors = document.querySelectorAll('a[href]');
                 anchors.forEach(function(a) {
                   var href = a.getAttribute('href') || '';
-                  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
-                    return;
-                  }
+                  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
                   try {
                     var decorated = decorateUrl(href);
-                    if (decorated && decorated !== href) {
-                      a.setAttribute('href', decorated);
-                    }
+                    if (decorated && decorated !== href) a.setAttribute('href', decorated);
                   } catch (e) {}
                 });
               }
-
-              // Roda no load
               window.addEventListener('load', patchLinks);
-
-              // Observa mudanças no DOM (para SPAs / Next.js)
-              var observer = new MutationObserver(function(mutations) {
-                patchLinks();
-              });
-              observer.observe(document.documentElement, {
-                childList: true,
-                subtree: true
-              });
+              var observer = new MutationObserver(function(mutations) { patchLinks(); });
+              observer.observe(document.documentElement, { childList: true, subtree: true });
             })();
           `}
         </Script>
 
-        {/* 3) Persistência de UTM + page_view inicial com UTMs (em modo debug) */}
+        {/* --- 4) Persistência de UTM + PageView Manual --- */}
         <Script id="ga4-utm-persist" strategy="afterInteractive">
           {`
             (function() {
@@ -160,25 +165,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   content: params.get('utm_content')
                 };
 
-                // Se chegou com UTM na URL, salva
-                if (
-                  utm.source ||
-                  utm.medium ||
-                  utm.campaign ||
-                  utm.term ||
-                  utm.content
-                ) {
-                  localStorage.setItem('daq_first_utm', JSON.stringify({
-                    ...utm,
-                    ts: Date.now()
-                  }));
+                if (utm.source || utm.medium || utm.campaign || utm.term || utm.content) {
+                  localStorage.setItem('daq_first_utm', JSON.stringify({ ...utm, ts: Date.now() }));
                 }
 
-                // Resgata UTM salvo (se existir)
                 var stored = localStorage.getItem('daq_first_utm');
                 var firstUtm = stored ? JSON.parse(stored) : null;
 
-                // Dispara page_view manual com debug_mode
                 function sendPageView() {
                   var page_location = window.location.href;
                   var page_path = window.location.pathname + window.location.search;
@@ -191,7 +184,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     debug_mode: true
                   };
 
-                  // Se tiver UTM persistida, manda junto
                   if (firstUtm) {
                     eventParams.utm_source = firstUtm.source || '(not set)';
                     eventParams.utm_medium = firstUtm.medium || '(not set)';
@@ -200,22 +192,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     if (firstUtm.content) eventParams.utm_content = firstUtm.content;
                   }
 
-                  // Se tiver gtag carregado, envia
                   if (typeof window.gtag === 'function') {
                     window.gtag('event', 'page_view', eventParams);
                   }
                 }
 
-                // Debounce simples pra evitar flood em navegações rápidas
                 window.__ga4TitleDebounce = window.__ga4TitleDebounce || null;
-
                 if (typeof window !== 'undefined') {
                   if (window.__ga4InitialPVFired !== true) {
                     window.__ga4InitialPVFired = true;
                     sendPageView();
                   }
-
-                  // Caso o título mude depois de carregar, dispara de novo (opcional)
                   var titleEl = document.querySelector('title') || document.documentElement;
                   var titleObserver = new MutationObserver(function() {
                     clearTimeout(window.__ga4TitleDebounce);
