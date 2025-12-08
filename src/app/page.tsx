@@ -106,15 +106,6 @@ export default function HomePage() {
               caos, aprender de verdade e parar de repetir o mesmo ciclo todos os anos.
             </p>
             
-             {/* CTA Principal */}
-             <button
-              onClick={openModal}
-              className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-emerald-500/30 transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg"
-            >
-              <FontAwesomeIcon icon={faTrophy} />
-              Quero garantir minha vaga
-            </button>
-            
              {/* Prova Social Rápida - OTIMIZADA */}
              <div className="mt-8 flex items-center gap-4 text-xs sm:text-sm text-slate-500">
                 <div className="flex -space-x-2">
