@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-// Carregamento dinâmico para componentes "abaixo da dobra"
+// Carregamento dinâmico para componentes pesados
 const FaqSection = dynamic(() => import('@/components/FaqSection'));
 const FormModal = dynamic(() => import('@/components/FormModal'));
 const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSection'));
@@ -52,20 +52,32 @@ export default function HomePage() {
   return (
     <main className="flex flex-col min-h-screen">
       
-      {/* --- BANNER DE NATAL (ALTA CONVERSÃO) --- */}
-      <div className="bg-red-600 text-white py-3 px-4 text-center font-bold uppercase tracking-wider text-xs sm:text-sm md:text-base shadow-lg animate-pulse z-50">
+      {/* --- BANNER DE NATAL --- */}
+      <div className="bg-red-600 text-white py-2 px-4 text-center font-bold uppercase tracking-wider text-xs sm:text-sm shadow-md animate-pulse z-50">
         <FontAwesomeIcon icon={faGift} className="mr-2" />
         Oferta Especial de Natal — Por Tempo Limitado
       </div>
 
       {/* Seção Header (Hero) */}
       <header className="relative bg-gradient-to-b from-white to-slate-50 py-10 md:py-20 overflow-hidden">
-        <div className="absolute inset-0 hero-background-image bg-cover bg-center opacity-5" />
+        
+        {/* OTIMIZAÇÃO LCP: Imagem de fundo carregada via Next Image e não CSS */}
+        <div className="absolute inset-0 opacity-5 -z-10 select-none pointer-events-none">
+          <Image 
+            src="/img/background-hero.webp" 
+            alt="Background Texture"
+            fill
+            priority
+            quality={50}
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+        </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:flex items-center gap-12">
           {/* COLUNA TEXTO */}
           <div className="lg:w-1/2 mb-10 lg:mb-0">
-            {/* NOVA HEADLINE: Curta e Direta (Otimizada para Mobile) */}
+            {/* HEADLINE */}
             <h1
               className="
                 text-4xl sm:text-5xl lg:text-[4rem]
@@ -77,7 +89,7 @@ export default function HomePage() {
               Aprenda com a{' '}
               <span className="text-amber-500 inline-block relative">
                 prova
-                {/* Sublinhado decorativo */}
+                {/* Sublinhado SVG */}
                 <svg
                   className="absolute w-full h-3 -bottom-1 left-0 text-amber-200 -z-10"
                   viewBox="0 0 100 10"
@@ -94,24 +106,33 @@ export default function HomePage() {
               caos, aprender de verdade e parar de repetir o mesmo ciclo todos os anos.
             </p>
             
-             {/* Prova Social Rápida */}
+             {/* CTA Principal */}
+             <button
+              onClick={openModal}
+              className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-emerald-500/30 transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg"
+            >
+              <FontAwesomeIcon icon={faTrophy} />
+              Quero garantir minha vaga
+            </button>
+            
+             {/* Prova Social Rápida - OTIMIZADA */}
              <div className="mt-8 flex items-center gap-4 text-xs sm:text-sm text-slate-500">
                 <div className="flex -space-x-2">
                   <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
-                    <Image src="/img/depoimento_8.webp" alt="Aluno" fill className="object-cover" />
+                    <Image src="/img/depoimento_8.webp" alt="Aluno 1" fill sizes="32px" className="object-cover" />
                   </div>
                   <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
-                    <Image src="/img/depoimento_11.jpg" alt="Aluno" fill className="object-cover" />
+                    <Image src="/img/depoimento_11.jpg" alt="Aluno 2" fill sizes="32px" className="object-cover" />
                   </div>
                   <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
-                    <Image src="/img/depoimento_2.webp" alt="Aluno" fill className="object-cover" />
+                    <Image src="/img/depoimento_2.webp" alt="Aluno 3" fill sizes="32px" className="object-cover" />
                   </div>
                 </div>
                 <p>Junte-se a +1.000 alunos</p>
              </div>
           </div>
 
-          {/* COLUNA IMAGEM */}
+          {/* COLUNA IMAGEM - OTIMIZADA PARA LCP */}
           <div className="lg:w-1/2 relative">
             <div className="relative max-w-xl ml-auto">
               <div className="absolute -inset-6 bg-amber-100/40 blur-3xl rounded-[2.5rem] -z-10" />
@@ -120,8 +141,10 @@ export default function HomePage() {
                 src="/img/Kyrlla.webp"
                 width={1280}
                 height={853}
-                alt="Estudo por questões"
-                priority
+                alt="Kyrlla Pattyelly - Método SPQ"
+                priority // Carrega com prioridade máxima (LCP)
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px" // AJUDA O NAVEGADOR A BAIXAR A IMAGEM DO TAMANHO CERTO
+                quality={85}
               />
               {/* Badge Flutuante */}
               <div className="absolute -bottom-6 -left-4 sm:-left-8 bg-white p-4 rounded-xl shadow-xl border border-slate-100 max-w-[200px] hidden sm:block">
@@ -140,7 +163,7 @@ export default function HomePage() {
 
       {/* Seção Faixa de Destaque */}
       <section className="bg-amber-50 py-4 text-center text-xs sm:text-sm font-medium text-amber-800 tracking-wide shine px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto relative z-20"> {/* z-index para ficar acima do shine */}
           <FontAwesomeIcon icon={faBolt} className="mr-2" /> 
           SEM PDF • SEM VIDEOAULA INFINITA • SEM TEORIA QUE VOCÊ NÃO USA
         </div>
@@ -164,6 +187,8 @@ export default function HomePage() {
                   className="w-full max-w-md rounded-2xl shadow-xl border-4 border-white"
                   width={450}
                   height={560}
+                  // Tamanhos para responsividade correta
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   style={{ minWidth: '280px' }}
                 />
                 <div className="absolute -bottom-4 -right-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg text-sm sm:text-base">
@@ -215,6 +240,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* As demais seções permanecem iguais, já são estáticas e rápidas */}
       {/* Seção O que é / não é */}
       <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-8 md:gap-12">
         <div className="bg-white p-8 rounded-xl shadow-sm border-l-4 border-rose-500">

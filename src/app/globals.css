@@ -4,24 +4,14 @@
 @layer base {
   :root {
     color-scheme: light;
-    /* As cores do Tailwind serão usadas diretamente, mas mantemos a declaração do tema. */
   }
 
   body {
-    @apply antialiased; /* Melhora a renderização da fonte */
+    @apply antialiased;
     scroll-behavior: smooth;
   }
   
-  /* Imagem de fundo responsiva para a seção Hero */
-  .hero-background-image {
-    background-image: url('/img/background-hero-640.webp');
-  }
-
-  @media (min-width: 768px) {
-    .hero-background-image {
-      background-image: url('/img/background-hero.webp');
-    }
-  }
+  /* REMOVIDO: .hero-background-image -> Agora será um componente Image no page.tsx para melhorar o LCP */
 }
 
 /* 3. Define classes de componentes customizadas. */
@@ -34,10 +24,10 @@
     content: '';
     @apply absolute bottom-1 left-0 w-full rounded-sm -z-10;
     height: 8px;
-    background-color: rgba(245, 158, 11, 0.3); /* Cor amber-500 com opacidade */
+    background-color: rgba(245, 158, 11, 0.3);
   }
 
-  /* Efeito de brilho que passa sobre um elemento */
+  /* Efeito de brilho OTIMIZADO (GPU Accelerated) */
   .shine {
     @apply relative overflow-hidden;
   }
@@ -45,11 +35,14 @@
     content: "";
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 200%;
+    left: 0; /* Fixado em 0, a animação move via transform */
+    width: 100%; /* Ajustado para evitar overflow */
     height: 100%;
-    background: linear-gradient(70deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
-    animation: shine 7s linear infinite;
+    background: linear-gradient(70deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+    transform: translateX(-100%); /* Começa fora da tela */
+    animation: shine 4s infinite; /* Reduzi o tempo para ficar mais dinâmico */
+    z-index: 10;
+    pointer-events: none; /* Garante que o brilho não bloqueie cliques */
   }
 
   /* Estilos para o card de feature com hover */
@@ -63,26 +56,19 @@
 
 /* 4. Define animações customizadas. */
 @keyframes shine {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% { transform: translateX(-100%); }
+  20%, 100% { transform: translateX(100%); } /* Pausa longa entre brilhos */
 }
 
-/* O Tailwind já inclui a animação 'bounce' e 'pulse', 
-   então não precisamos redefini-las a menos que queiramos um comportamento diferente.
-   Vamos usar as do Tailwind para manter o padrão. */
-
-/* 5. Acessibilidade: Reduz animações se o usuário preferir. */
+/* 5. Acessibilidade */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
   ::after {
-    animation-delay: -1ms !important;
-    animation-duration: 1ms !important;
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    background-attachment: scroll !important;
-    scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
-    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
