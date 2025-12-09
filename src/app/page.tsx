@@ -76,12 +76,6 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-6 lg:flex items-center gap-12">
           {/* COLUNA TEXTO */}
           <div className="lg:w-1/2 mb-10 lg:mb-0">
-            {/* Tagline */}
-            <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-bold text-amber-600 uppercase tracking-[0.2em] mb-4 bg-amber-50 px-3 py-1 rounded-full">
-              <FontAwesomeIcon icon={faStar} />
-              Método SPQ
-            </span>
-
             {/* HEADLINE ORIGINAL (MANTIDA COM CORREÇÃO DE VÍRGULA) */}
             <h1
               className="
