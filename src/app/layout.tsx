@@ -4,7 +4,7 @@ import "./globals.css";
 
 // --- CONFIGURAÇÃO DE IDs ---
 const GA_MEASUREMENT_ID = "G-D0YYSYX9YH";
-const META_PIXEL_ID = "575682733921732"; // Seu ID já está correto aqui
+const META_PIXEL_ID = "575682733921732";
 // ---------------------------
 
 export const metadata: Metadata = {
@@ -48,14 +48,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
 
-        {/* --- 1) Contentsquare (O "Hotjar" que a Kyrlla mandou) --- */}
+        {/* --- 1) UTMify (NOVO SCRIPT SOLICITADO) --- */}
+        <Script
+          id="utmify-script"
+          src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+          strategy="afterInteractive"
+          data-utmify-prevent-subids
+        />
+
+        {/* --- 2) Contentsquare --- */}
         <Script
           id="contentsquare-script"
           src="https://t.contentsquare.net/uxa/8b9c231da4716.js"
           strategy="afterInteractive"
         />
 
-        {/* --- 2) Meta Pixel (Facebook) --- */}
+        {/* --- 3) Meta Pixel (Facebook) --- */}
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -70,7 +78,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             fbq('track', 'PageView');
           `}
         </Script>
-        {/* Fallback para users sem JS */}
         <noscript>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -82,7 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
         </noscript>
 
-        {/* --- 3) Google Analytics 4 (GA4) --- */}
+        {/* --- 4) Google Analytics 4 (GA4) --- */}
         <Script
           id="ga4-src"
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -151,7 +158,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
 
-        {/* --- 4) Persistência de UTM + PageView Manual --- */}
+        {/* --- 5) Persistência de UTM + PageView Manual --- */}
         <Script id="ga4-utm-persist" strategy="afterInteractive">
           {`
             (function() {

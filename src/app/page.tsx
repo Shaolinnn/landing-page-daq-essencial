@@ -6,7 +6,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-// Carregamento dinâmico para componentes pesados (mantido)
 const FaqSection = dynamic(() => import('@/components/FaqSection'));
 const FormModal = dynamic(() => import('@/components/FormModal'));
 const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSection'));
@@ -61,8 +60,7 @@ export default function HomePage() {
       {/* Seção Header (Hero) */}
       <header className="relative bg-gradient-to-b from-white to-slate-50 py-10 md:py-20 overflow-hidden">
         
-        {/* OTIMIZAÇÃO LCP: Imagem de fundo carregada via Next Image e não CSS */}
-        {/* Isso resolve o problema de "Chain Request" apontado no relatório */}
+        {/* OTIMIZAÇÃO LCP */}
         <div className="absolute inset-0 -z-10 select-none pointer-events-none opacity-5">
           <Image 
             src="/img/background-hero.webp" 
@@ -78,7 +76,13 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-6 lg:flex items-center gap-12">
           {/* COLUNA TEXTO */}
           <div className="lg:w-1/2 mb-10 lg:mb-0">
-            {/* HEADLINE */}
+            {/* Tagline */}
+            <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-bold text-amber-600 uppercase tracking-[0.2em] mb-4 bg-amber-50 px-3 py-1 rounded-full">
+              <FontAwesomeIcon icon={faStar} />
+              Método SPQ
+            </span>
+
+            {/* HEADLINE ORIGINAL (MANTIDA COM CORREÇÃO DE VÍRGULA) */}
             <h1
               className="
                 text-4xl sm:text-5xl lg:text-[4rem]
@@ -88,7 +92,6 @@ export default function HomePage() {
               "
             >
               Aprenda com a{' '}
-              {/* Alterado de 'inline-block' para 'inline' ou removido o display para fluxo de texto normal */}
               <span className="text-amber-500 relative whitespace-nowrap">
                 prova
                 {/* Sublinhado decorativo */}
@@ -103,29 +106,21 @@ export default function HomePage() {
               , na prática.
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed mb-8">
+            {/* SUBHEADLINE ORIGINAL (MANTIDA) */}
+            <p className="text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed mb-6">
               Um método simples, baseado em questões, neurociência e clareza mental, para estudar sem
               caos, aprender de verdade e parar de repetir o mesmo ciclo todos os anos.
             </p>
-                  
-             {/* Prova Social Rápida - OTIMIZADA */}
-             <div className="mt-8 flex items-center gap-4 text-xs sm:text-sm text-slate-500">
-                <div className="flex -space-x-2">
-                  <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
-                    <Image src="/img/depoimento_8.webp" alt="Aluno 1" fill sizes="32px" className="object-cover" />
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
-                    <Image src="/img/depoimento_11.jpg" alt="Aluno 2" fill sizes="32px" className="object-cover" />
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
-                    <Image src="/img/depoimento_2.webp" alt="Aluno 3" fill sizes="32px" className="object-cover" />
-                  </div>
-                </div>
-                <p>Junte-se a +1.000 alunos</p>
-             </div>
+            
+            {/* NOVA FRASE (SUBSTITUINDO PROVA SOCIAL NA HERO) */}
+            <div className="mb-8 p-3 rounded-lg bg-emerald-50/80 border-l-4 border-emerald-500 inline-block">
+                <p className="text-sm sm:text-base font-bold text-emerald-800 leading-snug">
+                  Mesmo que você já tenha tentado de TUDO ou esteja começando do completo zero!
+                </p>
+            </div>
           </div>
 
-          {/* COLUNA IMAGEM - OTIMIZADA PARA LCP */}
+          {/* COLUNA IMAGEM */}
           <div className="lg:w-1/2 relative">
             <div className="relative max-w-xl ml-auto">
               <div className="absolute -inset-6 bg-amber-100/40 blur-3xl rounded-[2.5rem] -z-10" />
@@ -135,12 +130,10 @@ export default function HomePage() {
                 width={1280}
                 height={853}
                 alt="Kyrlla Pattyelly - Método SPQ"
-                priority // Carrega com prioridade máxima (LCP)
-                // AQUI ESTÁ A MÁGICA: sizes diz ao navegador qual tamanho baixar
+                priority 
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px" 
                 quality={85}
               />
-              {/* Badge Flutuante */}
               <div className="absolute -bottom-6 -left-4 sm:-left-8 bg-white p-4 rounded-xl shadow-xl border border-slate-100 max-w-[200px] hidden sm:block">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="text-emerald-500">
@@ -157,7 +150,7 @@ export default function HomePage() {
 
       {/* Seção Faixa de Destaque */}
       <section className="bg-amber-50 py-4 text-center text-xs sm:text-sm font-medium text-amber-800 tracking-wide shine px-4">
-        <div className="max-w-4xl mx-auto relative z-20"> {/* z-index para ficar acima do shine */}
+        <div className="max-w-4xl mx-auto relative z-20"> 
           <FontAwesomeIcon icon={faBolt} className="mr-2" /> 
           SEM PDF • SEM VIDEOAULA INFINITA • SEM TEORIA QUE VOCÊ NÃO USA
         </div>
@@ -181,7 +174,6 @@ export default function HomePage() {
                   className="w-full max-w-md rounded-2xl shadow-xl border-4 border-white"
                   width={450}
                   height={560}
-                  // Tamanhos para responsividade correta
                   sizes="(max-width: 768px) 100vw, 33vw"
                   style={{ minWidth: '280px' }}
                 />
@@ -234,7 +226,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* As demais seções permanecem iguais, já são estáticas e rápidas */}
       {/* Seção O que é / não é */}
       <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-8 md:gap-12">
         <div className="bg-white p-8 rounded-xl shadow-sm border-l-4 border-rose-500">
@@ -465,6 +456,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* --- NOVA SEÇÃO FAQ MÉTODO (POSIÇÃO ESTRATÉGICA ANTES DO PREÇO) --- */}
+      <FaqSection variant="metodo" />
+
       {/* Seção Investimento */}
       <section id="checkout" className="py-16 bg-emerald-50">
         <div className="max-w-4xl mx-auto px-6">
@@ -509,6 +503,23 @@ export default function HomePage() {
                   <span>7 dias de garantia</span>
                 </li>
               </ul>
+              
+              {/* PROVA SOCIAL MOVIDA PARA CÁ (Aumenta confiança na hora de clicar) */}
+              <div className="mb-6 flex flex-col items-center gap-2">
+                <div className="flex -space-x-2">
+                    <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
+                    <Image src="/img/depoimento_8.webp" alt="Aluno 1" fill sizes="32px" className="object-cover" />
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
+                    <Image src="/img/depoimento_11.jpg" alt="Aluno 2" fill sizes="32px" className="object-cover" />
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
+                    <Image src="/img/depoimento_2.webp" alt="Aluno 3" fill sizes="32px" className="object-cover" />
+                    </div>
+                </div>
+                <p className="text-xs text-slate-500 font-medium">Junte-se a +1.000 alunos aprovados</p>
+              </div>
+
               <button
                 onClick={openModal}
                 className="inline-block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-6 rounded-lg shadow-lg shadow-emerald-500/20 transition-all transform hover:scale-105 text-lg"
@@ -604,8 +615,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Componente FAQ Carregado Dinamicamente */}
-      <FaqSection />
+      {/* --- SEÇÃO FAQ GERAL (FICA NO FINAL) --- */}
+      <FaqSection variant="geral" />
 
       {/* Footer */}
       <footer className="py-8 bg-slate-900 text-slate-400">
