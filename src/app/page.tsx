@@ -511,7 +511,7 @@ export default function HomePage() {
                     <Image src="/img/depoimento_2.webp" alt="Aluno 3" fill sizes="32px" className="object-cover" />
                     </div>
                 </div>
-                <p className="text-xs text-slate-500 font-medium">Junte-se a +1.000 alunos aprovados</p>
+                <p className="text-xs text-slate-500 font-medium">Junte-se a +1.000 alunos</p>
               </div>
 
               <button
