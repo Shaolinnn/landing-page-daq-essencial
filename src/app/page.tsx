@@ -6,14 +6,15 @@ import { useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
+// Carregamento dinâmico
 const FaqSection = dynamic(() => import('@/components/FaqSection'));
 const FormModal = dynamic(() => import('@/components/FormModal'));
 const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSection'));
 const VideoTestimonials = dynamic(() => import('@/components/VideoTestimonials'));
 
+// Importação dos ícones
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faStar,
   faBolt,
   faTimesCircle,
   faCheckCircle,
@@ -23,24 +24,14 @@ import {
   faPlayCircle,
   faLaptop,
   faUsers,
-  faComments,
-  faHandsHelping,
-  faHeart,
+  faMedal,
+  faTrophy,
+  faShieldAlt,
+  faCopyright,
   faFire,
   faCheck,
   faUserGraduate,
-  faMedal,
-  faTag,
-  faTrophy,
-  faGift,
-  faMapMarkedAlt,
-  faTasks,
-  faShieldAlt,
-  faSyncAlt,
-  faCopyright,
-  faLock,
-  faInfoCircle,
-  faTicketAlt,
+  faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
@@ -48,23 +39,29 @@ export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
 
+  // Função para scroll suave até o checkout
+  const scrollToCheckout = () => {
+    const checkoutSection = document.getElementById('checkout');
+    if (checkoutSection) {
+      checkoutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <main className="flex flex-col min-h-screen">
       
       {/* --- BANNER DE NATAL --- */}
       <div className="bg-red-600 text-white py-2 px-4 text-center font-bold uppercase tracking-wider text-xs sm:text-sm shadow-md animate-pulse z-50">
-        <FontAwesomeIcon icon={faGift} className="mr-2" />
+        <FontAwesomeIcon icon={faTrophy} className="mr-2" />
         Oferta Especial de Natal — Por Tempo Limitado
       </div>
 
-      {/* Seção Header (Hero) */}
-      <header className="relative bg-gradient-to-b from-white to-slate-50 py-10 md:py-20 overflow-hidden">
-        
-        {/* OTIMIZAÇÃO LCP */}
+      {/* --- HERO SECTION DO SITE --- */}
+      <header className="relative bg-gradient-to-b from-white to-slate-50 py-12 md:py-20 overflow-hidden">
         <div className="absolute inset-0 -z-10 select-none pointer-events-none opacity-5">
           <Image 
             src="/img/background-hero.webp" 
-            alt="Background Texture"
+            alt="Background"
             fill
             priority
             quality={50}
@@ -74,47 +71,61 @@ export default function HomePage() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:flex items-center gap-12">
-          {/* COLUNA TEXTO */}
+          {/* Texto Hero */}
           <div className="lg:w-1/2 mb-10 lg:mb-0">
-            {/* HEADLINE ORIGINAL (MANTIDA COM CORREÇÃO DE VÍRGULA) */}
-            <h1
-              className="
-                text-4xl sm:text-5xl lg:text-[4rem]
-                font-extrabold text-slate-900
-                leading-[1.1] tracking-tight
-                mb-6
-              "
-            >
+            <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-bold text-amber-600 uppercase tracking-[0.2em] mb-4 bg-amber-50 px-3 py-1 rounded-full">
+              <FontAwesomeIcon icon={faFire} /> Método SPQ
+            </span>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-[3.8rem] font-extrabold text-slate-900 leading-[1.1] tracking-tight mb-6">
               Aprenda com a{' '}
               <span className="text-amber-500 relative whitespace-nowrap">
                 prova
-                {/* Sublinhado decorativo */}
-                <svg
-                  className="absolute w-full h-3 -bottom-1 left-0 text-amber-200 -z-10"
-                  viewBox="0 0 100 10"
-                  preserveAspectRatio="none"
-                >
+                <svg className="absolute w-full h-3 -bottom-1 left-0 text-amber-200 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
                   <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="none" />
                 </svg>
               </span>
               , na prática.
             </h1>
 
-            {/* SUBHEADLINE ORIGINAL (MANTIDA) */}
             <p className="text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed mb-6">
               Um método simples, baseado em questões, neurociência e clareza mental, para estudar sem
               caos, aprender de verdade e parar de repetir o mesmo ciclo todos os anos.
             </p>
             
-            {/* NOVA FRASE (SUBSTITUINDO PROVA SOCIAL NA HERO) */}
-            <div className="mb-8 p-3 rounded-lg bg-emerald-50/80 border-l-4 border-emerald-500 inline-block">
+            {/* Frase de Impacto */}
+            <div className="mb-8 p-4 rounded-lg bg-emerald-50 border-l-4 border-emerald-500 max-w-lg">
                 <p className="text-sm sm:text-base font-bold text-emerald-800 leading-snug">
                   Mesmo que você já tenha tentado de TUDO ou esteja começando do completo zero!
                 </p>
             </div>
+            
+            {/* --- CTAS HERO (BOTÃO PRINCIPAL + WHATSAPP) --- */}
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+                {/* Botão Principal */}
+                <button
+                  onClick={openModal}
+                  className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-emerald-500/30 transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg"
+                >
+                  <FontAwesomeIcon icon={faTrophy} />
+                  Quero garantir minha vaga
+                </button>
+
+                {/* Botão WhatsApp */}
+                <a
+                  href="https://wa.me/64999965777?text=Oi%20Kyrlla%2C%20estou%20na%20p%C3%A1gina%20principal%20e%20tenho%20d%C3%BAvida%20sobre%20o%20DAQ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 text-slate-600 hover:text-emerald-600 font-semibold py-4 px-6 transition-colors border-2 border-slate-200 hover:border-emerald-200 rounded-xl bg-white/80 hover:bg-white"
+                >
+                  <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
+                  Tenho dúvida, falar no Whats
+                </a>
+            </div>
+
           </div>
 
-          {/* COLUNA IMAGEM */}
+          {/* Imagem Hero */}
           <div className="lg:w-1/2 relative">
             <div className="relative max-w-xl ml-auto">
               <div className="absolute -inset-6 bg-amber-100/40 blur-3xl rounded-[2.5rem] -z-10" />
@@ -123,16 +134,15 @@ export default function HomePage() {
                 src="/img/Kyrlla.webp"
                 width={1280}
                 height={853}
-                alt="Kyrlla Pattyelly - Método SPQ"
+                alt="Kyrlla Pattyelly"
                 priority 
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px" 
                 quality={85}
               />
+              {/* Badge */}
               <div className="absolute -bottom-6 -left-4 sm:-left-8 bg-white p-4 rounded-xl shadow-xl border border-slate-100 max-w-[200px] hidden sm:block">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="text-emerald-500">
-                    <FontAwesomeIcon icon={faCheckCircle} />
-                  </div>
+                  <div className="text-emerald-500"><FontAwesomeIcon icon={faCheckCircle} /></div>
                   <span className="font-bold text-slate-800 text-sm">Método Validado</span>
                 </div>
                 <p className="text-xs text-slate-500">Sem PDFs gigantes, direto ao ponto.</p>
@@ -142,21 +152,18 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Seção Faixa de Destaque */}
+      {/* Faixa */}
       <section className="bg-amber-50 py-4 text-center text-xs sm:text-sm font-medium text-amber-800 tracking-wide shine px-4">
-        <div className="max-w-4xl mx-auto relative z-20"> 
+        <div className="max-w-4xl mx-auto relative z-20">
           <FontAwesomeIcon icon={faBolt} className="mr-2" /> 
           SEM PDF • SEM VIDEOAULA INFINITA • SEM TEORIA QUE VOCÊ NÃO USA
         </div>
       </section>
 
-      {/* Depoimentos em texto */}
       <TestimonialsSection />
-
-      {/* Depoimentos em vídeo */}
       <VideoTestimonials />
 
-      {/* Seção BIO da Mentora */}
+      {/* Bio Mentora - COPY RESTAURADA */}
       <section className="py-16 bg-gradient-to-r from-amber-50 to-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center gap-12">
@@ -168,10 +175,9 @@ export default function HomePage() {
                   className="w-full max-w-md rounded-2xl shadow-xl border-4 border-white"
                   width={450}
                   height={560}
-                  sizes="(max-width: 768px) 100vw, 33vw"
                   style={{ minWidth: '280px' }}
                 />
-                <div className="absolute -bottom-4 -right-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg text-sm sm:text-base">
+                <div className="absolute -bottom-4 -right-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg">
                   <FontAwesomeIcon icon={faMedal} className="mr-1" /> Auditora Fiscal
                 </div>
               </div>
@@ -183,36 +189,43 @@ export default function HomePage() {
               <span className="inline-block text-xs sm:text-sm font-semibold text-amber-600 uppercase tracking-widest mb-2">
                 <FontAwesomeIcon icon={faUserGraduate} className="mr-1" /> QUEM SOU EU
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
+              <h2 className="text-3xl font-bold text-slate-900 mb-4">
                 Meu nome é Kyrlla Pattyelly e eu sou Auditora Fiscal e criadora do Método SPQ.
               </h2>
-              <p className="text-base sm:text-lg text-slate-700 mb-4">
+              
+              {/* COPY COMPLETA RESTAURADA */}
+              <p className="text-lg text-slate-700 mb-4">
                 Passei anos estudando do jeito errado, repetindo ciclos de reprovação e acumulando PDFs que não serviram
                 para nada — até descobrir que o que aprova não é quantidade de horas, e sim o jeito de estudar.
               </p>
-              <p className="text-base sm:text-lg text-slate-700 mb-4">
+              <p className="text-lg text-slate-700 mb-4">
                 Nos últimos anos, transformei essa descoberta no SPQ, um método baseado em questões e princípios da
                 neurociência do aprendizado, que já ajudou milhares de alunos a destravarem a mente, estudarem com
                 clareza e avançarem de verdade.
               </p>
-              
+              <p className="text-lg text-slate-700 mb-6">
+                Pode ser diferente de tudo que você já ouviu por aí, mas funcionou para muita gente — e vai funcionar
+                para você também.
+              </p>
+
               <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-emerald-500 mb-6">
-                <p className="text-slate-700 italic mb-2 text-sm sm:text-base">
+                <p className="text-slate-700 italic mb-2">
                   “Você não reprova por falta de esforço. Reprova pelo método errado — e isso dá pra consertar.”
                 </p>
               </div>
-              <div className="grid grid-cols-3 gap-2 sm:gap-4">
-                <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm text-center">
-                  <span className="block text-xl sm:text-2xl font-bold text-amber-600">+5</span>
-                  <span className="text-xs sm:text-sm text-slate-600">anos de exp.</span>
+
+              <div className="grid sm:grid-cols-3 gap-4 mt-6">
+                <div className="bg-white p-4 rounded-lg shadow-sm text-center">
+                  <span className="block text-2xl font-bold text-amber-600">+5</span>
+                  <span className="text-sm text-slate-600">anos transformando vidas</span>
                 </div>
-                <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm text-center">
-                  <span className="block text-xl sm:text-2xl font-bold text-amber-600">1k+</span>
-                  <span className="text-xs sm:text-sm text-slate-600">alunos</span>
+                <div className="bg-white p-4 rounded-lg shadow-sm text-center">
+                  <span className="block text-2xl font-bold text-amber-600">1.000+</span>
+                  <span className="text-sm text-slate-600">alunos mentorados</span>
                 </div>
-                <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm text-center">
-                  <span className="block text-xl sm:text-2xl font-bold text-amber-600">100%</span>
-                  <span className="text-xs sm:text-sm text-slate-600">foco</span>
+                <div className="bg-white p-4 rounded-lg shadow-sm text-center">
+                  <span className="block text-2xl font-bold text-amber-600">100%</span>
+                  <span className="text-sm text-slate-600">comprometida</span>
                 </div>
               </div>
             </div>
@@ -220,25 +233,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Seção O que é / não é */}
-      <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-8 md:gap-12">
+      {/* O que é / não é */}
+      <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-8">
         <div className="bg-white p-8 rounded-xl shadow-sm border-l-4 border-rose-500">
           <h2 className="text-xl font-bold text-rose-600 mb-4 flex items-center gap-2">
             <FontAwesomeIcon icon={faTimesCircle} /> O que o DAQ{' '}
             <span className="underline decoration-rose-400">não</span> é
           </h2>
-          <ul className="space-y-3 text-slate-700 text-sm sm:text-base">
+          <ul className="space-y-3 text-slate-700">
             <li className="flex items-start gap-3">
-              <FontAwesomeIcon icon={faTimesCircle} className="text-rose-400 mt-1 flex-shrink-0" />
+              <FontAwesomeIcon icon={faTimesCircle} className="text-rose-400 mt-1" />
               <span>Curso com 200h de aula que você nunca vai terminar</span>
             </li>
             <li className="flex items-start gap-3">
-              <FontAwesomeIcon icon={faTimesCircle} className="text-rose-400 mt-1 flex-shrink-0" />
+              <FontAwesomeIcon icon={faTimesCircle} className="text-rose-400 mt-1" />
               <span>PDF de 800 páginas pra decorar</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <FontAwesomeIcon icon={faTimesCircle} className="text-rose-400 mt-1 flex-shrink-0" />
-              <span>Cronograma engessado que não se adapta à sua realidade</span>
             </li>
           </ul>
         </div>
@@ -247,164 +256,74 @@ export default function HomePage() {
             <FontAwesomeIcon icon={faCheckCircle} /> O que o DAQ{' '}
             <span className="underline decoration-emerald-400">é</span>
           </h2>
-          <blockquote className="italic text-slate-700 border-l-4 border-emerald-500 pl-4 py-2 mb-4 text-sm sm:text-base">
-            Um método direto, simples e transformador pra você aprender{' '}
-            <strong className="font-semibold">fazendo questões</strong> com lógica de banca.
-          </blockquote>
-          <ul className="space-y-3 text-sm sm:text-base">
+          <ul className="space-y-3">
             <li className="flex items-start gap-3">
-              <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 flex-shrink-0" />
+              <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1" />
               <span>Foco no que realmente cai na prova</span>
             </li>
             <li className="flex items-start gap-3">
-              <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 flex-shrink-0" />
+              <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1" />
               <span>Adaptável à sua rotina</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 flex-shrink-0" />
-              <span>Resultados mensuráveis</span>
             </li>
           </ul>
         </div>
       </section>
 
-      {/* Seção Como funciona */}
+      {/* Como funciona */}
       <section className="bg-slate-50 py-16">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
-              <FontAwesomeIcon icon={faSearch} className="text-amber-500 mr-2" /> Como funciona o Método SPQ
-            </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
-              Um passo a passo claro para estudar por questões com lógica de prova
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-400 feature-card">
-              <span className="text-amber-500 font-bold text-2xl">1</span>
-              <h3 className="font-semibold mt-2">Análise do Edital</h3>
-              <p className="text-sm text-slate-600 mt-2">Identifique os tópicos que realmente importam</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-400 feature-card">
-              <span className="text-amber-500 font-bold text-2xl">2</span>
-              <h3 className="font-semibold mt-2">Seleção de Questões</h3>
-              <p className="text-sm text-slate-600 mt-2">Filtre as questões mais relevantes</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-400 feature-card">
-              <span className="text-amber-500 font-bold text-2xl">3</span>
-              <h3 className="font-semibold mt-2">Estudo Ativo</h3>
-              <p className="text-sm text-slate-600 mt-2">Aprenda estudando questões</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-400 feature-card">
-              <span className="text-amber-500 font-bold text-2xl">4</span>
-              <h3 className="font-semibold mt-2">Revisão Estratégica</h3>
-              <p className="text-sm text-slate-600 mt-2">Consolide o conhecimento</p>
-            </div>
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-slate-900 mb-12">
+            <FontAwesomeIcon icon={faSearch} className="text-amber-500 mr-2" /> Como funciona o Método SPQ
+          </h2>
+          <div className="grid md:grid-cols-4 gap-6">
+            {[
+              { title: 'Análise do Edital', desc: 'Identifique os tópicos que realmente importam' },
+              { title: 'Seleção de Questões', desc: 'Filtre as questões mais relevantes' },
+              { title: 'Estudo Ativo', desc: 'Aprenda estudando questões' },
+              { title: 'Revisão Estratégica', desc: 'Consolide o conhecimento' },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-400 feature-card">
+                <span className="text-amber-500 font-bold text-2xl">{idx + 1}</span>
+                <h3 className="font-semibold mt-2">{item.title}</h3>
+                <p className="text-sm text-slate-600 mt-2">{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Seção O que você vai receber */}
-      <section id="beneficios" className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
-              <FontAwesomeIcon icon={faGraduationCap} className="text-amber-500 mr-2" /> O que você vai receber
-            </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
-              Tudo que você precisa para transformar sua forma de estudar
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-200 text-center feature-card h-full">
-              <div className="text-amber-500 text-3xl mb-4">
-                <FontAwesomeIcon icon={faProjectDiagram} />
-              </div>
+      {/* Benefícios */}
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-slate-900 mb-12">
+            <FontAwesomeIcon icon={faGraduationCap} className="text-amber-500 mr-2" /> O que você vai receber
+          </h2>
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-200 feature-card">
+              <FontAwesomeIcon icon={faProjectDiagram} className="text-amber-500 text-3xl mb-4" />
               <h3 className="font-semibold mb-2">Método SPQ</h3>
-              <p className="text-sm text-slate-600">
-                Passo a passo claro para estudar por questões com lógica de prova
-              </p>
+              <p className="text-sm text-slate-600">Passo a passo claro com lógica de prova</p>
             </div>
-            <div className="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-200 text-center feature-card h-full">
-              <div className="text-amber-500 text-3xl mb-4">
-                <FontAwesomeIcon icon={faPlayCircle} />
-              </div>
-              <h3 className="font-semibold mb-2">Aprenda a estudar com IA</h3>
-              <p className="text-sm text-slate-600">
-                Aprenda a montar questões inéditas e estudar discursivas com profundidade
-              </p>
+            <div className="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-200 feature-card">
+              <FontAwesomeIcon icon={faPlayCircle} className="text-amber-500 text-3xl mb-4" />
+              <h3 className="font-semibold mb-2">Estudar com IA</h3>
+              <p className="text-sm text-slate-600">Monte questões inéditas e estude discursivas</p>
             </div>
-            <div className="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-200 text-center feature-card h-full">
-              <div className="text-amber-500 text-3xl mb-4">
-                <FontAwesomeIcon icon={faLaptop} />
-              </div>
-              <h3 className="font-semibold mb-2">Aprenda a usar o TEC Concursos</h3>
-              <p className="text-sm text-slate-600">
-                Use com intenção estratégica, e não como banco de questões solto
-              </p>
+            <div className="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-200 feature-card">
+              <FontAwesomeIcon icon={faLaptop} className="text-amber-500 text-3xl mb-4" />
+              <h3 className="font-semibold mb-2">TEC Concursos</h3>
+              <p className="text-sm text-slate-600">Use com intenção estratégica</p>
             </div>
-            <div className="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-200 text-center feature-card h-full">
-              <div className="text-amber-500 text-3xl mb-4">
-                <FontAwesomeIcon icon={faUsers} />
-              </div>
-              <h3 className="font-semibold mb-2">Acesso a comunidade de alunos</h3>
-              <p className="text-sm text-slate-600">
-                Espaço exclusivo para interação e networking entre os alunos do DAQ
-              </p>
+            <div className="bg-slate-50 p-6 rounded-xl shadow-sm border border-slate-200 feature-card">
+              <FontAwesomeIcon icon={faUsers} className="text-amber-500 text-3xl mb-4" />
+              <h3 className="font-semibold mb-2">Comunidade</h3>
+              <p className="text-sm text-slate-600">Interação e networking exclusivo</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Seção Comunidade */}
-      <section className="py-16 bg-gradient-to-r from-amber-50 to-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="md:w-1/3 text-center mb-8 md:mb-0">
-              <div className="inline-flex items-center justify-center relative">
-                <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 text-4xl sm:text-5xl relative z-10">
-                  <FontAwesomeIcon icon={faUsers} />
-                </div>
-                <div className="absolute -top-4 -right-4 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-2xl sm:text-3xl">
-                  <FontAwesomeIcon icon={faComments} />
-                </div>
-                <div className="absolute -bottom-4 -left-4 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl sm:text-3xl">
-                  <FontAwesomeIcon icon={faHandsHelping} />
-                </div>
-              </div>
-            </div>
-            <div className="md:w-2/3 text-center md:text-left">
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
-                <FontAwesomeIcon icon={faHeart} className="text-amber-500 mr-2" /> Você não vai estudar sozinho(a)
-              </h2>
-              <p className="text-base sm:text-lg text-slate-700 mb-6">
-                O DAQ não é só um método - é uma comunidade vibrante de concurseiros que estudam com inteligência. Aqui
-                você encontra:
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-left">
-                <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                  <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 flex-shrink-0" />
-                  <span>Troca de experiências com outros alunos</span>
-                </div>
-                <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                  <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 flex-shrink-0" />
-                  <span>Suporte automatizado para tirar todas as suas dúvidas</span>
-                </div>
-                <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                  <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 flex-shrink-0" />
-                  <span>Motivação diária para manter o foco</span>
-                </div>
-                <div className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                  <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 flex-shrink-0" />
-                  <span>Celebração coletiva das aprovações</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Seção Pra quem é */}
+      {/* Pra Quem é (COM CTA NOVO) */}
       <section className="py-16 bg-gradient-to-r from-amber-50 to-orange-50">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12">
@@ -415,91 +334,74 @@ export default function HomePage() {
               Se você se identifica com algum desses pontos, o método foi feito para você
             </p>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
             <ul className="space-y-4">
               <li className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                <span className="text-amber-500 text-xl mt-1">
-                  <FontAwesomeIcon icon={faCheck} />
-                </span>
+                <span className="text-amber-500 text-xl mt-1"><FontAwesomeIcon icon={faCheck} /></span>
                 <span className="text-slate-700">Pra quem estuda há anos e continua travado</span>
               </li>
               <li className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                <span className="text-amber-500 text-xl mt-1">
-                  <FontAwesomeIcon icon={faCheck} />
-                </span>
+                <span className="text-amber-500 text-xl mt-1"><FontAwesomeIcon icon={faCheck} /></span>
                 <span className="text-slate-700">Pra quem acerta pouco mesmo estudando muito</span>
               </li>
             </ul>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                <span className="text-amber-500 text-xl mt-1">
-                  <FontAwesomeIcon icon={faCheck} />
-                </span>
-                <span className="text-slate-700">
-                  Pra quem já entendeu que o problema não é o concurso: é o método
-                </span>
+                <span className="text-amber-500 text-xl mt-1"><FontAwesomeIcon icon={faCheck} /></span>
+                <span className="text-slate-700">Pra quem já entendeu que o problema não é o concurso: é o método</span>
               </li>
               <li className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                <span className="text-amber-500 text-xl mt-1">
-                  <FontAwesomeIcon icon={faCheck} />
-                </span>
+                <span className="text-amber-500 text-xl mt-1"><FontAwesomeIcon icon={faCheck} /></span>
                 <span className="text-slate-700">Pra quem quer estudar com raciocínio, não com decoreba</span>
               </li>
             </ul>
           </div>
+          
+          {/* CTA Adicionado */}
+          <div className="text-center">
+            <button
+              onClick={openModal}
+              className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl group"
+            >
+              <FontAwesomeIcon icon={faCheck} className="mr-2 group-hover:scale-110 transition-transform" />
+              Me identifiquei! Quero começar agora 
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* --- NOVA SEÇÃO FAQ MÉTODO (POSIÇÃO ESTRATÉGICA ANTES DO PREÇO) --- */}
+      {/* FAQ Método */}
       <FaqSection variant="metodo" />
 
-      {/* Seção Investimento */}
+      {/* Checkout / Investimento */}
       <section id="checkout" className="py-16 bg-emerald-50">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-900 mb-2">
-              <FontAwesomeIcon icon={faTag} className="text-emerald-600 mr-2" /> Investimento
+              <FontAwesomeIcon icon={faTrophy} className="text-emerald-600 mr-2" /> Investimento
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Um método que muda a sua lógica de estudo pra sempre
-            </p>
+            <p className="text-slate-600">Um método que muda a sua lógica de estudo pra sempre</p>
           </div>
+
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            {/* Card de Preço */}
-            <div className="bg-white p-8 rounded-2xl shadow-lg border-2 border-emerald-200 text-center relative h-full flex flex-col justify-center transform hover:scale-[1.02] transition-transform duration-300">
+            {/* Card Preço */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg border-2 border-emerald-200 text-center relative transform hover:scale-[1.01] transition-transform">
               <span className="absolute -top-3 -right-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">
                 7 dias de garantia
               </span>
               <h3 className="text-xl font-bold text-slate-800 mb-4">DAQ Essencial</h3>
-              {/* Ancoragem + preço parcelado */}
-              <p className="text-slate-600 text-base mb-3 px-4">
-                Mais barato que aquela assinatura vitalícia do cursinho que você não usa — e, diferente dela, te
-                aproxima da aprovação:
-              </p>
               <p className="text-slate-500 text-lg mb-1">Apenas 12x de</p>
               <p className="text-5xl font-bold text-emerald-600 mb-4 font-poppins">R$ 51,40</p>
-
-              <ul className="space-y-3 text-left text-slate-700 mb-8 text-sm sm:text-base">
-                <li className="flex items-start gap-2">
-                  <FontAwesomeIcon icon={faCheck} className="text-emerald-500 mt-1" />
-                  <span>Método SPQ completo</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <FontAwesomeIcon icon={faCheck} className="text-emerald-500 mt-1" />
-                  <span>Aulas sobre como usar IA</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <FontAwesomeIcon icon={faCheck} className="text-emerald-500 mt-1" />
-                  <span>Comunidade de alunos</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <FontAwesomeIcon icon={faCheck} className="text-emerald-500 mt-1" />
-                  <span>7 dias de garantia</span>
-                </li>
-              </ul>
               
-              {/* PROVA SOCIAL MOVIDA PARA CÁ (Aumenta confiança na hora de clicar) */}
-              <div className="mb-6 flex flex-col items-center gap-2">
+              {/* Lista Resumo */}
+              <ul className="space-y-2 text-left text-slate-700 mb-6 text-sm bg-slate-50 p-4 rounded-lg">
+                <li className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-emerald-500"/> Método SPQ Completo</li>
+                <li className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-emerald-500"/> Aulas de IA para Estudo</li>
+                <li className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-emerald-500"/> Comunidade de Alunos</li>
+              </ul>
+
+              {/* Prova Social antes do Botão */}
+              <div className="mb-4 flex flex-col items-center gap-2">
                 <div className="flex -space-x-2">
                     <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
                     <Image src="/img/depoimento_8.webp" alt="Aluno 1" fill sizes="32px" className="object-cover" />
@@ -511,7 +413,7 @@ export default function HomePage() {
                     <Image src="/img/depoimento_2.webp" alt="Aluno 3" fill sizes="32px" className="object-cover" />
                     </div>
                 </div>
-                <p className="text-xs text-slate-500 font-medium">Junte-se a +1.000 alunos</p>
+                <p className="text-xs text-slate-500 font-medium">Junte-se a +1.000 alunos aprovados</p>
               </div>
 
               <button
@@ -521,144 +423,81 @@ export default function HomePage() {
                 <FontAwesomeIcon icon={faTrophy} className="mr-2" /> Quero meu plano de aprovação
               </button>
               <a
-                href="https://wa.me/64999965777?text=Oi%20Kyrlla%2C%20ainda%20estou%20com%20d%C3%BAvida%20sobre%20o%20DAQ%20Essencial"
+                href="https://wa.me/64999965777?text=Oi%20Kyrlla%2C%20vim%20pela%20oferta%20de%20Natal%20e%20tenho%20d%C3%BAvidas"
                 target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center justify-center text-sm font-semibold text-emerald-700 hover:text-emerald-800"
+                className="mt-4 flex items-center justify-center text-sm font-semibold text-emerald-700 hover:text-emerald-800"
               >
-                <FontAwesomeIcon icon={faWhatsapp} className="mr-2" /> Ainda está com dúvida? Fale com a gente
+                <FontAwesomeIcon icon={faWhatsapp} className="mr-2" /> Dúvidas? Fale com a gente
               </a>
             </div>
 
-            {/* Lista de Bônus */}
+            {/* Bônus */}
             <div>
-              <h4 className="text-xl font-semibold text-amber-600 mb-4 flex items-center">
-                <FontAwesomeIcon icon={faGift} className="mr-2" /> Bônus especiais:
-              </h4>
-              <div className="space-y-4">
-                {/* Bônus 1: Desconto TEC */}
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100 transform transition-transform hover:translate-x-1">
-                  <h5 className="font-semibold text-slate-800 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faTicketAlt} className="text-amber-500" /> Cupom de 20% no TEC
-                  </h5>
-                  <p className="text-sm text-slate-600 mt-1">Desconto exclusivo para assinatura, renovação ou upgrade.</p>
+              <h4 className="text-xl font-semibold text-amber-600 mb-4">Bônus especiais:</h4>
+              <div className="space-y-3">
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100 hover:border-amber-200 transition-colors">
+                  <strong className="block text-slate-800 flex items-center gap-2">
+                    <FontAwesomeIcon icon={faTrophy} className="text-amber-500"/> Cupom de 20% no TEC
+                  </strong>
+                  <p className="text-xs text-slate-500 mt-1">Economize na assinatura da melhor plataforma de questões.</p>
                 </div>
-
-                 {/* Bônus 2: Comunidade */}
-                 <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100 transform transition-transform hover:translate-x-1">
-                  <h5 className="font-semibold text-slate-800 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faUsers} className="text-amber-500" /> Comunidade Exclusiva de Alunos
-                  </h5>
-                  <p className="text-sm text-slate-600 mt-1">Networking, troca de dúvidas e suporte.</p>
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100 hover:border-amber-200 transition-colors">
+                  <strong className="block text-slate-800 flex items-center gap-2">
+                    <FontAwesomeIcon icon={faUsers} className="text-amber-500"/> Comunidade Exclusiva
+                  </strong>
+                  <p className="text-xs text-slate-500 mt-1">Networking e troca de experiências com outros alunos.</p>
                 </div>
-
-                {/* Bônus 3 */}
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100 transform transition-transform hover:translate-x-1">
-                  <h5 className="font-semibold text-slate-800 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faMapMarkedAlt} className="text-amber-500" /> Mini Treinamento
-                  </h5>
-                  <p className="text-sm text-slate-600 mt-1">Mapa de Interpretação de Questões</p>
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100 hover:border-amber-200 transition-colors">
+                  <strong className="block text-slate-800 flex items-center gap-2">
+                    <FontAwesomeIcon icon={faPlayCircle} className="text-amber-500"/> Mini Treinamento
+                  </strong>
+                  <p className="text-xs text-slate-500 mt-1">Mapa de Interpretação de Questões.</p>
                 </div>
-                {/* Bônus 4 */}
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100 transform transition-transform hover:translate-x-1">
-                  <h5 className="font-semibold text-slate-800 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faTasks} className="text-amber-500" /> Checklist Exclusivo
-                  </h5>
-                  <p className="text-sm text-slate-600 mt-1">Os 7 erros que sabotam sua lógica de prova</p>
-                </div>
-                {/* Bônus 5 */}
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100 transform transition-transform hover:translate-x-1">
-                  <h5 className="font-semibold text-slate-800 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faStar} className="text-amber-500" /> Acesso Prioritário
-                  </h5>
-                  <p className="text-sm text-slate-600 mt-1">Às vagas da mentoria SPQ</p>
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100 hover:border-amber-200 transition-colors">
+                  <strong className="block text-slate-800 flex items-center gap-2">
+                    <FontAwesomeIcon icon={faCheckCircle} className="text-amber-500"/> Checklist Exclusivo
+                  </strong>
+                  <p className="text-xs text-slate-500 mt-1">Os 7 erros que sabotam sua lógica de prova.</p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="mt-8 text-center text-sm text-slate-500">
-            <FontAwesomeIcon icon={faLock} className="mr-1" /> Pagamento 100% seguro • Renovação automática • Suporte em
-            até 24h
-          </div>
         </div>
       </section>
 
-      {/* Seção Garantia */}
+      {/* Garantia */}
       <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="bg-slate-50 p-8 rounded-xl border border-slate-200">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="md:w-1/3 text-center">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 text-3xl">
-                  <FontAwesomeIcon icon={faShieldAlt} />
-                </div>
-              </div>
-              <div className="md:w-2/3 text-center md:text-left">
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">
-                  <FontAwesomeIcon icon={faSyncAlt} className="text-emerald-500 mr-2" /> Garantia de satisfação
-                </h2>
-                <p className="text-slate-600">
-                  {`Você tem 7 dias pra testar o DAQ. Se não curtir, basta um clique e devolvemos seu dinheiro. Sem perguntas. Sem ressentimentos.`}
-                </p>
-                <p className="text-sm text-slate-500 mt-4">
-                  <FontAwesomeIcon icon={faInfoCircle} className="mr-1" /> Risco zero para você
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="max-w-4xl mx-auto px-6 text-center bg-slate-50 p-8 rounded-xl border border-slate-200">
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">
+            <FontAwesomeIcon icon={faShieldAlt} className="text-emerald-500 mr-2" /> Garantia de satisfação
+          </h2>
+          <p className="text-slate-600 mb-6">
+            Você tem 7 dias pra testar. Se não curtir, devolvemos seu dinheiro.
+          </p>
+          <button
+                onClick={openModal}
+                className="inline-block bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50 font-semibold py-2 px-6 rounded-full transition-colors"
+              >
+                Começar sem riscos
+          </button>
         </div>
       </section>
 
-      {/* --- SEÇÃO FAQ GERAL (FICA NO FINAL) --- */}
       <FaqSection variant="geral" />
 
-      {/* Footer */}
       <footer className="py-8 bg-slate-900 text-slate-400">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-            <div className="mb-6 md:mb-0">
-              <p className="text-sm">
-                <FontAwesomeIcon icon={faCopyright} className="mr-1" /> 2025 DAQ Essencial. Todos os direitos
-                reservados.
-              </p>
-              <p className="mt-4 text-xs sm:text-sm text-slate-500">
-                *Kyrlla Pattyelly* – Auditora Fiscal • Criadora do SPQ • Mentora de milhares de aprovados
-              </p>
-            </div>
-            <div className="flex justify-center gap-6">
-              <a
-                href="https://www.instagram.com/soporquestoes/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xl hover:text-amber-500 transition-colors"
-                aria-label="Instagram"
-              >
-                <FontAwesomeIcon icon={faInstagram} />
-              </a>
-              <a
-                href="https://www.youtube.com/@soporquestoes"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xl hover:text-amber-500 transition-colors"
-                aria-label="YouTube"
-              >
-                <FontAwesomeIcon icon={faYoutube} />
-              </a>
-              <a
-                href="https://wa.me/64999965777?text=Oi%20Kyrlla%2C%20vim%20da%20p%C3%A1gina%20de%20vendas.%20Quero%20mais%20detalhes%20do%20DAQ%20Essencial"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xl hover:text-amber-500 transition-colors"
-                aria-label="WhatsApp"
-              >
-                <FontAwesomeIcon icon={faWhatsapp} />
-              </a>
-            </div>
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm">
+            <FontAwesomeIcon icon={faCopyright} className="mr-1" /> 2025 DAQ Essencial.
+          </p>
+          <div className="flex gap-4 mt-4 md:mt-0">
+            <a href="https://www.instagram.com/soporquestoes/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faInstagram} className="text-xl hover:text-amber-500 cursor-pointer" /></a>
+            <a href="https://www.youtube.com/@soporquestoes" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faYoutube} className="text-xl hover:text-amber-500 cursor-pointer" /></a>
+            <a href="https://wa.me/64999965777" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faWhatsapp} className="text-xl hover:text-amber-500 cursor-pointer" /></a>
           </div>
         </div>
       </footer>
 
-      {/* Modal de checkout */}
       {isModalOpen && <FormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
     </main>
   );

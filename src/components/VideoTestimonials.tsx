@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
+import dynamic from 'next/dynamic'; // Importação para carregar o modal se necessário, ou usar a prop
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -14,10 +15,22 @@ import {
   faChevronRight,
   faPlay,
   faTimes,
+  faTrophy,
+  faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
+// Precisamos importar o componente do Modal para que o botão funcione, 
+// ou receber a função openModal via props. 
+// Para facilitar e manter a independência, vou adicionar um State local simples 
+// ou podemos apenas linkar para o ID #checkout se preferir uma navegação suave.
+// **MELHOR OPÇÃO:** Vamos usar um link <a> que rola suavemente até a seção de Checkout (#checkout),
+// pois abrir o modal aqui pode exigir passar props complexas do pai para o filho.
+// Ou melhor: Vamos disparar o Modal se você passar a função, mas o scroll suave é mais seguro para componentes isolados.
+
+// VOU USAR A ESTRATÉGIA DE SCROLL SUAVE PARA O CHECKOUT PARA NÃO QUEBRAR A ARQUITETURA DE PROPS
+// Se preferir o Modal, me avise que altero a injeção de props no page.tsx.
 
 type VideoTestimonial = {
   videoId: string;
@@ -106,6 +119,14 @@ const videoData: VideoTestimonial[] = [
 export default function VideoTestimonials() {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
 
+  // Função para rolar suavemente até o checkout
+  const scrollToCheckout = () => {
+    const checkoutSection = document.getElementById('checkout');
+    if (checkoutSection) {
+      checkoutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <section className="py-16 bg-gradient-to-b from-slate-50 to-white">
@@ -145,10 +166,10 @@ export default function VideoTestimonials() {
             >
               {videoData.map((video) => (
                 <SwiperSlide key={video.videoId}>
-                  <article className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden flex flex-col h-full">
+                  <article className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden flex flex-col h-full group hover:border-amber-200 transition-colors">
                     {/* Thumbnail */}
                     <div
-                      className="relative aspect-video cursor-pointer group"
+                      className="relative aspect-video cursor-pointer"
                       onClick={() => setActiveVideoId(video.videoId)}
                     >
                       <Image
@@ -156,13 +177,13 @@ export default function VideoTestimonials() {
                         alt={video.title}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 400px"
-                        className="object-cover"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-70 group-hover:opacity-80 transition-opacity" />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="flex flex-col items-center gap-2">
-                          <span className="inline-flex items-center justify-center rounded-full bg-amber-500 text-white w-14 h-14 shadow-lg group-hover:scale-105 transition-transform">
-                            <FontAwesomeIcon icon={faPlay} className="text-2xl" />
+                          <span className="inline-flex items-center justify-center rounded-full bg-amber-500 text-white w-14 h-14 shadow-lg group-hover:scale-110 transition-transform">
+                            <FontAwesomeIcon icon={faPlay} className="text-2xl ml-1" />
                           </span>
                           <span className="text-xs font-semibold tracking-wide uppercase text-white/90">
                             Assistir depoimento
@@ -173,25 +194,21 @@ export default function VideoTestimonials() {
 
                     {/* Texto / resumo */}
                     <div className="p-5 flex-1 flex flex-col">
-                      <h3 className="text-sm sm:text-base font-semibold text-slate-900 mb-1">
+                      <h3 className="text-sm sm:text-base font-semibold text-slate-900 mb-1 leading-tight">
                         {video.title}
                       </h3>
                       <p className="text-xs text-slate-500 mb-3">{video.subtitle}</p>
 
-                      <p className="text-sm text-slate-700 mb-3">{video.hook}</p>
+                      <p className="text-sm text-slate-700 mb-3 font-medium">{video.hook}</p>
 
                       <ul className="space-y-1.5 text-xs text-slate-600 flex-1">
                         {video.bullets.map((item, index) => (
-                          <li key={index} className="flex gap-2">
+                          <li key={index} className="flex gap-2 items-start">
                             <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-400 flex-shrink-0" />
                             <span>{item}</span>
                           </li>
                         ))}
                       </ul>
-
-                      <p className="mt-3 text-[11px] uppercase tracking-wide text-amber-600 font-semibold">
-                        Resumo da história em poucos pontos — o restante você vê no vídeo.
-                      </p>
                     </div>
                   </article>
                 </SwiperSlide>
@@ -206,6 +223,22 @@ export default function VideoTestimonials() {
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
+
+          {/* --- NOVO CTA ESTRATÉGICO --- */}
+          <div className="mt-12 text-center">
+            <button
+              onClick={scrollToCheckout}
+              className="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-8 rounded-full shadow-lg shadow-emerald-500/20 transition-all transform hover:-translate-y-1 hover:shadow-xl group"
+            >
+              <FontAwesomeIcon icon={faTrophy} className="mr-2 group-hover:text-amber-300 transition-colors" />
+              Quero ter resultados como esses
+              <FontAwesomeIcon icon={faArrowRight} className="ml-2 opacity-70 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <p className="mt-3 text-xs sm:text-sm text-slate-500">
+              Junte-se aos alunos que pararam de rodar em círculos.
+            </p>
+          </div>
+
         </div>
       </section>
 
@@ -213,21 +246,21 @@ export default function VideoTestimonials() {
       {activeVideoId && (
         <div
           onClick={() => setActiveVideoId(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
         >
-          <div className="relative w-full max-w-4xl mx-auto">
+          <div className="relative w-full max-w-4xl mx-auto animate-fade-in-up">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setActiveVideoId(null);
               }}
-              className="absolute -top-10 right-0 text-white hover:text-amber-400 text-2xl"
+              className="absolute -top-12 right-0 text-white/80 hover:text-white hover:bg-white/10 rounded-full w-10 h-10 flex items-center justify-center transition-all"
               aria-label="Fechar vídeo"
             >
-              <FontAwesomeIcon icon={faTimes} />
+              <FontAwesomeIcon icon={faTimes} className="text-2xl" />
             </button>
             <div
-              className="aspect-video bg-black rounded-lg overflow-hidden"
+              className="aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
               <iframe
