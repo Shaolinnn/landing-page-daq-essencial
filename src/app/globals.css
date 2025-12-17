@@ -6,12 +6,22 @@
     color-scheme: light;
   }
 
+  /* OTIMIZAÇÃO DE FONTE PARA 5G */
+  /* Garante que o texto aparece mesmo se a fonte demorar a baixar */
+  @font-face {
+    font-family: 'Inter'; /* Ou a fonte que você usa */
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap; /* O segredo para não sumir o texto */
+    src: local('Inter'); /* Fallback */
+  }
+
   body {
     @apply antialiased;
     scroll-behavior: smooth;
+    /* Força o swap em qualquer fonte carregada */
+    font-display: swap; 
   }
-  
-  /* REMOVIDO: .hero-background-image -> Agora será um componente Image no page.tsx para melhorar o LCP */
 }
 
 /* 3. Define classes de componentes customizadas. */
@@ -28,7 +38,6 @@
   }
 
   /* Efeito de brilho OTIMIZADO (GPU Accelerated) */
-  /* Isso corrige o CLS e o Reflow forçado apontado no relatório */
   .shine {
     @apply relative overflow-hidden;
   }
@@ -40,11 +49,11 @@
     width: 100%; 
     height: 100%;
     background: linear-gradient(70deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
-    transform: translateX(-100%); /* Começa fora da tela usando transform (mais leve) */
+    transform: translateX(-100%); 
     animation: shine 4s infinite; 
     z-index: 10;
     pointer-events: none; 
-    will-change: transform; /* Avisa o navegador para preparar a GPU */
+    will-change: transform; 
   }
 
   /* Estilos para o card de feature com hover */
@@ -59,7 +68,7 @@
 /* 4. Define animações customizadas. */
 @keyframes shine {
   0% { transform: translateX(-100%); }
-  20%, 100% { transform: translateX(100%); } /* Pausa longa entre brilhos */
+  20%, 100% { transform: translateX(100%); } 
 }
 
 /* 5. Acessibilidade */
