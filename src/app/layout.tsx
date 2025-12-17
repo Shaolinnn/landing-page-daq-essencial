@@ -48,19 +48,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
 
-        {/* --- 1) UTMify (NOVO SCRIPT SOLICITADO) --- */}
+        {/* --- 1) UTMify (OTIMIZADO: lazyOnload) --- */}
         <Script
           id="utmify-script"
           src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           data-utmify-prevent-subids
         />
 
-        {/* --- 2) Contentsquare --- */}
+        {/* --- 2) Contentsquare (OTIMIZADO: lazyOnload) --- */}
         <Script
           id="contentsquare-script"
           src="https://t.contentsquare.net/uxa/8b9c231da4716.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
 
         {/* --- 3) Meta Pixel (Facebook) --- */}
@@ -89,7 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
         </noscript>
 
-        {/* --- 4) Google Analytics 4 (GA4) --- */}
+        {/* --- 4) Google Analytics 4 (GA4) - CORRIGIDO --- */}
         <Script
           id="ga4-src"
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -115,46 +115,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               anonymize_ip: true,
               allow_ad_personalization_signals: false,
               allow_google_signals: false,
-              debug_mode: true,
+              debug_mode: false,
               linker: {
                 domains: ${JSON.stringify(CROSS_DOMAIN_LINKER)},
                 decoration: 'linker',
               }
             });
-
-            // Cross-domain linker manual
-            (function() {
-              function decorateUrl(url) {
-                try {
-                  var u = new URL(url, window.location.origin);
-                  var host = (u.hostname || '').replace(/^www\\./i, '');
-                  var isAllowed = ${JSON.stringify(CROSS_DOMAIN_LINKER)}.some(function(domain) {
-                    var d = domain.replace(/^www\\./i, '');
-                    return host === d || host.endsWith('.' + d);
-                  });
-                  if (!isAllowed) return url;
-                  var cid = 'cid-' + Math.random().toString(16).slice(2);
-                  u.searchParams.set('_gl', 'cid=' + encodeURIComponent(cid));
-                  return u.toString();
-                } catch (e) {
-                  return url;
-                }
-              }
-              function patchLinks() {
-                var anchors = document.querySelectorAll('a[href]');
-                anchors.forEach(function(a) {
-                  var href = a.getAttribute('href') || '';
-                  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
-                  try {
-                    var decorated = decorateUrl(href);
-                    if (decorated && decorated !== href) a.setAttribute('href', decorated);
-                  } catch (e) {}
-                });
-              }
-              window.addEventListener('load', patchLinks);
-              var observer = new MutationObserver(function(mutations) { patchLinks(); });
-              observer.observe(document.documentElement, { childList: true, subtree: true });
-            })();
           `}
         </Script>
 
@@ -188,7 +154,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     page_location: page_location,
                     page_path: page_path,
                     page_title: page_title,
-                    debug_mode: true
+                    debug_mode: false
                   };
 
                   if (firstUtm) {
