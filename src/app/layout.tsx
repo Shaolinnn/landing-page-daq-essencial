@@ -48,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
 
-        {/* --- 1) UTMify (OTIMIZADO: lazyOnload) --- */}
+        {/* --- 1) UTMify (OTIMIZADO: lazyOnload - EVITA TELA BRANCA) --- */}
         <Script
           id="utmify-script"
           src="https://cdn.utmify.com.br/scripts/utms/latest.js"
@@ -56,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           data-utmify-prevent-subids
         />
 
-        {/* --- 2) Contentsquare (OTIMIZADO: lazyOnload) --- */}
+        {/* --- 2) Contentsquare (OTIMIZADO: lazyOnload - EVITA TELA BRANCA) --- */}
         <Script
           id="contentsquare-script"
           src="https://t.contentsquare.net/uxa/8b9c231da4716.js"

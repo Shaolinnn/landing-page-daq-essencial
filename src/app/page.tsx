@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-// Carregamento dinâmico
+// Carregamento dinâmico dos componentes pesados
 const FaqSection = dynamic(() => import('@/components/FaqSection'));
 const FormModal = dynamic(() => import('@/components/FormModal'));
 const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSection'));
@@ -30,22 +30,13 @@ import {
   faCopyright,
   faFire,
   faCheck,
-  faUserGraduate,
-  faArrowRight
+  faUserGraduate
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
-
-  // Função para scroll suave até o checkout
-  const scrollToCheckout = () => {
-    const checkoutSection = document.getElementById('checkout');
-    if (checkoutSection) {
-      checkoutSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <main className="flex flex-col min-h-screen">
@@ -58,13 +49,14 @@ export default function HomePage() {
 
       {/* --- HERO SECTION DO SITE --- */}
       <header className="relative bg-gradient-to-b from-white to-slate-50 py-12 md:py-20 overflow-hidden">
+        {/* CORREÇÃO: Usando a imagem leve (640) para o background para evitar travamento */}
         <div className="absolute inset-0 -z-10 select-none pointer-events-none opacity-5">
           <Image 
-            src="/img/background-hero.webp" 
+            src="/img/background-hero-640.webp" 
             alt="Background"
             fill
             priority
-            quality={50}
+            quality={60} // Qualidade reduzida para performance máxima
             className="object-cover object-center"
             sizes="100vw"
           />
@@ -100,9 +92,8 @@ export default function HomePage() {
                 </p>
             </div>
             
-            {/* --- CTAS HERO (BOTÃO PRINCIPAL + WHATSAPP) --- */}
+            {/* --- CTAS HERO --- */}
             <div className="flex flex-col sm:flex-row items-center gap-4">
-                {/* Botão Principal */}
                 <button
                   onClick={openModal}
                   className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-emerald-500/30 transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg"
@@ -111,7 +102,6 @@ export default function HomePage() {
                   Quero garantir minha vaga
                 </button>
 
-                {/* Botão WhatsApp */}
                 <a
                   href="https://wa.me/64999965777?text=Oi%20Kyrlla%2C%20estou%20na%20p%C3%A1gina%20principal%20e%20tenho%20d%C3%BAvida%20sobre%20o%20DAQ"
                   target="_blank"
@@ -125,21 +115,22 @@ export default function HomePage() {
 
           </div>
 
-          {/* Imagem Hero */}
+          {/* Imagem Hero Principal */}
           <div className="lg:w-1/2 relative">
             <div className="relative max-w-xl ml-auto">
               <div className="absolute -inset-6 bg-amber-100/40 blur-3xl rounded-[2.5rem] -z-10" />
               <Image
                 className="w-full rounded-2xl shadow-2xl border-4 border-white object-cover transform rotate-1 hover:rotate-0 transition-transform duration-500"
                 src="/img/Kyrlla.webp"
-                width={1280}
-                height={853}
+                width={800} // Reduzido de 1280 para otimizar mobile
+                height={533}
                 alt="Kyrlla Pattyelly"
                 priority 
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px" 
+                sizes="(max-width: 768px) 100vw, 600px" 
                 quality={85}
               />
-              {/* Badge */}
+              
+              {/* Badge Flutuante */}
               <div className="absolute -bottom-6 -left-4 sm:-left-8 bg-white p-4 rounded-xl shadow-xl border border-slate-100 max-w-[200px] hidden sm:block">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="text-emerald-500"><FontAwesomeIcon icon={faCheckCircle} /></div>
@@ -163,7 +154,7 @@ export default function HomePage() {
       <TestimonialsSection />
       <VideoTestimonials />
 
-      {/* Bio Mentora - COPY RESTAURADA */}
+      {/* Bio Mentora */}
       <section className="py-16 bg-gradient-to-r from-amber-50 to-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center gap-12">
@@ -193,7 +184,6 @@ export default function HomePage() {
                 Meu nome é Kyrlla Pattyelly e eu sou Auditora Fiscal e criadora do Método SPQ.
               </h2>
               
-              {/* COPY COMPLETA RESTAURADA */}
               <p className="text-lg text-slate-700 mb-4">
                 Passei anos estudando do jeito errado, repetindo ciclos de reprovação e acumulando PDFs que não serviram
                 para nada — até descobrir que o que aprova não é quantidade de horas, e sim o jeito de estudar.
@@ -323,7 +313,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Pra Quem é (COM CTA NOVO) */}
+      {/* Pra Quem é */}
       <section className="py-16 bg-gradient-to-r from-amber-50 to-orange-50">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12">
@@ -357,7 +347,6 @@ export default function HomePage() {
             </ul>
           </div>
           
-          {/* CTA Adicionado */}
           <div className="text-center">
             <button
               onClick={openModal}
@@ -393,14 +382,12 @@ export default function HomePage() {
               <p className="text-slate-500 text-lg mb-1">Apenas 12x de</p>
               <p className="text-5xl font-bold text-emerald-600 mb-4 font-poppins">R$ 51,40</p>
               
-              {/* Lista Resumo */}
               <ul className="space-y-2 text-left text-slate-700 mb-6 text-sm bg-slate-50 p-4 rounded-lg">
                 <li className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-emerald-500"/> Método SPQ Completo</li>
                 <li className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-emerald-500"/> Aulas de IA para Estudo</li>
                 <li className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-emerald-500"/> Comunidade de Alunos</li>
               </ul>
 
-              {/* Prova Social antes do Botão */}
               <div className="mb-4 flex flex-col items-center gap-2">
                 <div className="flex -space-x-2">
                     <div className="w-8 h-8 rounded-full bg-slate-200 border-2 border-white overflow-hidden relative">
