@@ -380,7 +380,7 @@ export default function HomePage() {
               </span>
               <h3 className="text-xl font-bold text-slate-800 mb-4">DAQ Essencial</h3>
               <p className="text-slate-500 text-lg mb-1">Apenas 12x de</p>
-              <p className="text-5xl font-bold text-emerald-600 mb-4 font-poppins">R$ 51,40</p>
+              <p className="text-5xl font-bold text-emerald-600 mb-4 font-poppins">R$ 54,47</p>
               
               <ul className="space-y-2 text-left text-slate-700 mb-6 text-sm bg-slate-50 p-4 rounded-lg">
                 <li className="flex items-center gap-2"><FontAwesomeIcon icon={faCheck} className="text-emerald-500"/> Método SPQ Completo</li>
