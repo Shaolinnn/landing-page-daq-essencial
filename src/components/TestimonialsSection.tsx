@@ -20,7 +20,22 @@ const testimonialsData: Testimonial[] = [
   // BLOCO 1: TEMPO / RESULTADO RÁPIDO (A PROVA DE QUE O MÉTODO FUNCIONA)
   // ----------------------------------------------------------------------
 
-  // [NOVO] 1) Depoimento da Dashboard (91% em 7 dias)
+  // [NOVO] - Depoimento Imagem 13 (Superação de platô 79% -> 84%)
+  {
+    image: '/img/depoimento_13.jpeg',
+    text: (
+      <>
+        “Passando pra comemorar o aumento da minha porcentagem de acertos e para agradecer a Kyrlla pelo <strong>excelente método</strong>.
+        <br />
+        <br />
+        Não conseguia passar dos 79% no estudo tradicional e <strong>hoje já passei dos 84%!!!</strong>”
+      </>
+    ),
+    author: 'Aluno DAQ',
+    role: 'Evolução de 79% para 84%',
+  },
+
+  // 1) Depoimento da Dashboard (91% em 7 dias)
   {
     image: '/img/depoimento_12.jpg',
     text: (
@@ -36,7 +51,7 @@ const testimonialsData: Testimonial[] = [
     role: '91% de acerto em 1 semana',
   },
 
-  // 2) 7 dias de método (Resultado Imediato - Mantido logo após para reforçar)
+  // 2) 7 dias de método (Resultado Imediato)
   {
     image: '/img/depoimento_8.webp',
     text: (
@@ -228,7 +243,7 @@ export default function TestimonialsSection() {
                   src={testimonial.image}
                   alt={`Depoimento de ${testimonial.author}`}
                   fill
-                  // Otimização para Mobile (mantida conforme última correção)
+                  // Otimização para Mobile
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                   priority={index < 3}
