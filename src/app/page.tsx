@@ -6,6 +6,9 @@ import { useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
+// 1. IMPORTAÇÃO DO COMPONENTE DE CONVERSÃO
+import GoogleAdsConversion from '@/components/GoogleAdsConversion';
+
 // Carregamento dinâmico dos componentes pesados
 const FaqSection = dynamic(() => import('@/components/FaqSection'));
 const FormModal = dynamic(() => import('@/components/FormModal'));
@@ -41,6 +44,9 @@ export default function HomePage() {
   return (
     <main className="flex flex-col min-h-screen">
       
+      {/* 2. COMPONENTE ADICIONADO AQUI (ID ESPECÍFICO DAQ ESSENCIAL) */}
+      <GoogleAdsConversion sendTo="AW-583505601/ICbQCNfH3_waEMGtnpYC" />
+
       {/* --- BANNER DE NATAL --- */}
       <div className="bg-red-600 text-white py-2 px-4 text-center font-bold uppercase tracking-wider text-xs sm:text-sm shadow-md animate-pulse z-50">
         <FontAwesomeIcon icon={faTrophy} className="mr-2" />
